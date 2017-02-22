@@ -6,7 +6,11 @@
 package com.easyshopping.controller.app;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import com.easyshopping.service.BrandService;
 import com.easyshopping.service.ProductCategoryService;
@@ -38,10 +42,10 @@ public class AppProductCategoryController extends BaseController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelMap list(ModelMap model) {
-		model.addAttribute("productCategoryTree", productCategoryService.findTree());
-		return model;
+	public Map<String ,Object> list(HttpServletRequest httpServletRequest) {
+		Map<String ,Object>  map = new HashMap<>();
+		map.put("productCategoryTree", productCategoryService.findTree());
+		return map;
 	}
-
 
 }

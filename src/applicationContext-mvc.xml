@@ -16,6 +16,10 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/app/**" />
+			<bean class="com.easyshopping.interceptor.CORSInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/order/**" />
 			<mvc:mapping path="/member/**" />
 			<bean id="memberInterceptor" class="com.easyshopping.interceptor.MemberInterceptor" />
