@@ -54,6 +54,15 @@ public class MemberDaoImpl extends BaseDaoImpl<Member, Long> implements MemberDa
 		Long count = entityManager.createQuery(jpql, Long.class).setFlushMode(FlushModeType.COMMIT).setParameter("email", email).getSingleResult();
 		return count > 0;
 	}
+	
+	public boolean mobileExists(String mobile) {
+		if (mobile == null) {
+			return false;
+		}
+		String jpql = "select count(*) from Member members where members.mobile = :mobile";
+		Long count = entityManager.createQuery(jpql, Long.class).setFlushMode(FlushModeType.COMMIT).setParameter("mobile", mobile).getSingleResult();
+		return count > 0;
+	}
 
 	public Member findByUsername(String username) {
 		if (username == null) {
