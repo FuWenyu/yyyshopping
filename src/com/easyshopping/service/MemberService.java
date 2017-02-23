@@ -46,6 +46,16 @@ public interface MemberService extends BaseService<Member, Long> {
 	 * @return E-mail是否存在
 	 */
 	boolean emailExists(String email);
+	
+	
+	/**
+	 * 判断mobile是否存在
+	 * 
+	 * @param email
+	 * 
+	 * @return mobile是否存在
+	 */
+	boolean mobileExists(String mobile);
 
 	/**
 	 * 判断E-mail是否唯一

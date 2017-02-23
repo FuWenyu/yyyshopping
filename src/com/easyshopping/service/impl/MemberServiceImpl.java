@@ -73,6 +73,11 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 	public boolean emailExists(String email) {
 		return memberDao.emailExists(email);
 	}
+	
+	@Transactional(readOnly = true)
+	public boolean mobileExists(String mobile) {
+		return memberDao.mobileExists(mobile);
+	}
 
 	@Transactional(readOnly = true)
 	public boolean emailUnique(String previousEmail, String currentEmail) {
