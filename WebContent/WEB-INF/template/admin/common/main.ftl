@@ -63,6 +63,14 @@ $().ready(function() {
 			<th>
 				<div id="nav" class="nav">
 					<ul>
+						[#list ["admin:vendingMachine"] as permission]
+							[@shiro.hasPermission name = permission]
+								<li>
+									<a href="#vendingMachine">${message("admin.main.vendingMachineNav")}</a>
+								</li>
+								[#break /]
+							[/@shiro.hasPermission]
+						[/#list]
 						[#list ["admin:product", "admin:productCategory", "admin:parameterGroup", "admin:attribute", "admin:specification", "admin:brand", "admin:productNotify"] as permission]
 							[@shiro.hasPermission name = permission]
 								<li>
@@ -139,7 +147,15 @@ $().ready(function() {
 		</tr>
 		<tr>
 			<td id="menu" class="menu">
-				<dl id="product" class="default">
+				<dl id="vendingMachine" class="default">
+					<dt>${message("admin.main.vendingMachineGroup")}</dt>
+					[@shiro.hasPermission name="admin:vendingMachine"]
+						<dd>
+							<a href="../vending_machine/list.jhtml" target="iframe">${message("admin.main.vendingMachineGroup")}</a>
+						</dd>
+					[/@shiro.hasPermission]
+				</dl>
+				<dl id="product">
 					<dt>${message("admin.main.productGroup")}</dt>
 					[@shiro.hasPermission name="admin:product"]
 						<dd>
