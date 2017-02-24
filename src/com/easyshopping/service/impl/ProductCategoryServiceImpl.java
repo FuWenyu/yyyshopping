@@ -6,6 +6,7 @@
 package com.easyshopping.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -35,6 +36,11 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory,
 		super.setBaseDao(productCategoryDao);
 	}
 
+	@Override
+	public List<Map<String,Object>> findList(Integer grade) {
+		return productCategoryDao.findList(grade);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<ProductCategory> findRoots() {
 		return productCategoryDao.findRoots(null);

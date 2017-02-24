@@ -7,7 +7,9 @@ package com.easyshopping.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.FlushModeType;
 import javax.persistence.TypedQuery;
@@ -28,6 +30,22 @@ import org.springframework.util.Assert;
 @Repository("productCategoryDaoImpl")
 public class ProductCategoryDaoImpl extends BaseDaoImpl<ProductCategory, Long> implements ProductCategoryDao {
 
+	
+	@Override
+	public List<Map<String,Object>> findList(Integer grade) {
+		String jpql = "select productCategory from ProductCategory productCategory where productCategory.grade = :grade order by productCategory.order asc";
+		TypedQuery<ProductCategory> query = entityManager.createQuery(jpql, ProductCategory.class).setFlushMode(FlushModeType.COMMIT).setParameter("grade", grade);
+		List<ProductCategory> list = query.getResultList();
+		List<Map<String,Object>> maplist = new ArrayList<>();
+		for (ProductCategory productCategory : list) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("id", productCategory.getId());
+			map.put("name", productCategory.getName());
+			maplist.add(map);
+		}
+		return maplist;
+	}
+	
 	public List<ProductCategory> findRoots(Integer count) {
 		String jpql = "select productCategory from ProductCategory productCategory where productCategory.parent is null order by productCategory.order asc";
 		TypedQuery<ProductCategory> query = entityManager.createQuery(jpql, ProductCategory.class).setFlushMode(FlushModeType.COMMIT);

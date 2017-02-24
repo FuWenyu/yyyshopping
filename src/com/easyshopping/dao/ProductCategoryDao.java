@@ -6,6 +6,7 @@
 package com.easyshopping.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.easyshopping.entity.ProductCategory;
 
@@ -17,6 +18,15 @@ import com.easyshopping.entity.ProductCategory;
  */
 public interface ProductCategoryDao extends BaseDao<ProductCategory, Long> {
 
+	/**
+	 * 按等级商品分类
+	 * 
+	 * @param grade
+	 *            等级
+	 * @return 商品分类列表
+	 */
+	List<Map<String,Object>> findList(Integer grade);
+	
 	/**
 	 * 查找顶级商品分类
 	 * 
