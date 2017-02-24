@@ -56,7 +56,7 @@ public class LoginController extends BaseController {
 			
 		Map<String,Object> map = new HashMap<>();
 		String reCode="0";
-		String reMsg="";
+		String reMsg="succese";
 		if (StringUtils.isEmpty(request.getParameter("username")) || StringUtils.isEmpty(request.getParameter("password"))) {
 			reCode="1";
 			reMsg="用户名密码不为空";
@@ -122,7 +122,10 @@ public class LoginController extends BaseController {
 		member.setLoginFailureCount(0);
 		memberService.update(member);
 
-		map.put("userId", member.getId());
+		map.put("reCode", reCode);
+		map.put("reMsg", reMsg);
+		map.put("userid", member.getId());
+		map.put("username", member.getUsername());
 		map.put("name", member.getName());
 		map.put("gender", member.getGender());
 		map.put("email", member.getEmail());
