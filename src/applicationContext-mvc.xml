@@ -27,6 +27,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/payment/**" />
+			<mvc:exclude-mapping path="/app/**" />
 			<bean id="tokenInterceptor" class="com.easyshopping.interceptor.TokenInterceptor" />
 		</mvc:interceptor>
 		<!-- 

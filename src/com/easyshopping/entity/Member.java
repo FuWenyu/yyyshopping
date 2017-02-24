@@ -224,7 +224,7 @@ public class Member extends BaseEntity {
 	 */
 	@NotEmpty(groups = Save.class)
 	@Pattern(regexp = "^[0-9a-z_A-Z\\u4e00-\\u9fa5]+$")
-	@Column(nullable = false, updatable = false, unique = true, length = 100)
+	@Column(updatable = false, unique = true, length = 100)
 	public String getUsername() {
 		return username;
 	}
@@ -269,7 +269,7 @@ public class Member extends BaseEntity {
 	@NotEmpty
 	@Email
 	@Length(max = 200)
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	public String getEmail() {
 		return email;
 	}
@@ -289,7 +289,7 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 积分
 	 */
-	@NotNull(groups = Save.class)
+//	@NotNull(groups = Save.class)
 	@Min(0)
 	@Column(nullable = false)
 	public Long getPoint() {
@@ -311,7 +311,7 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 消费金额
 	 */
-	@Column(nullable = false, precision = 27, scale = 12)
+	@Column(precision = 27, scale = 12)
 	public BigDecimal getAmount() {
 		return amount;
 	}
@@ -331,10 +331,10 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 余额
 	 */
-	@NotNull(groups = Save.class)
+//	@NotNull(groups = Save.class)
 	@Min(0)
 	@Digits(integer = 12, fraction = 3)
-	@Column(nullable = false, precision = 27, scale = 12)
+	@Column(precision = 27, scale = 12)
 	public BigDecimal getBalance() {
 		return balance;
 	}
@@ -434,7 +434,7 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 注册IP
 	 */
-	@Column(nullable = false, updatable = false)
+	@Column(updatable = false)
 	public String getRegisterIp() {
 		return registerIp;
 	}
@@ -610,7 +610,9 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 手机
 	 */
-	@Length(max = 200)
+	@NotNull
+	@Length(max = 20)
+	@Pattern(regexp ="1([\\d]{10})|((\\+[0-9]{2,4})?\\(?[0-9]+\\)?-?)?[0-9]{7,8}")
 	public String getMobile() {
 		return mobile;
 	}
@@ -870,9 +872,9 @@ public class Member extends BaseEntity {
 	 * 
 	 * @return 会员等级
 	 */
-	@NotNull
+//	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+//	@JoinColumn(nullable = false)
 	public MemberRank getMemberRank() {
 		return memberRank;
 	}
