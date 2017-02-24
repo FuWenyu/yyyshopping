@@ -17,6 +17,7 @@
 				/admin/logout.jsp = logout
 				/admin/common/captcha.jhtml = anon
 
+				/admin/vending_machine/** = perms["admin:vendingMachine"]
 				/admin/product/** = perms["admin:product"]
 				/admin/product_category/** = perms["admin:productCategory"]
 				/admin/parameter_group/** = perms["admin:parameterGroup"]

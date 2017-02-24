@@ -38,11 +38,23 @@ public class vendor extends OrderEntity {
 	/** 坐标（经纬度） */
 	private String position;
 
-	/** 地址*/
+	/** 地址 */
 	private String address;
 
-	/** 营业时间*/
+	/** 营业时间 */
 	private String shophours;
+
+	/** 名称 */
+	private String name;
+
+	/** 折扣 */
+	private String discount;
+
+	/** 优惠 */
+	private String privilege;
+
+	/** 图片 */
+	private String image;
 
 	@NotEmpty
 	@Length(max = 10)
@@ -54,6 +66,7 @@ public class vendor extends OrderEntity {
 	public void setVendor_code(String vendor_code) {
 		this.vendor_code = vendor_code;
 	}
+
 	@NotEmpty
 	@Length(max = 50)
 	@Column(nullable = false)
@@ -75,6 +88,7 @@ public class vendor extends OrderEntity {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	@NotEmpty
 	@Length(max = 10)
 	@Column(nullable = false)
@@ -84,6 +98,50 @@ public class vendor extends OrderEntity {
 
 	public void setShophours(String shophours) {
 		this.shophours = shophours;
+	}
+
+	@NotEmpty
+	@Length(max = 50)
+	@Column(nullable = false)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@NotEmpty
+	@Length(max = 10)
+	@Column(nullable = false)
+	public String getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(String discount) {
+		this.discount = discount;
+	}
+
+	@NotEmpty
+	@Length(max = 50)
+	@Column(nullable = false)
+	public String getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(String privilege) {
+		this.privilege = privilege;
+	}
+
+	@NotEmpty
+	@Length(max = 100)
+	@Column(nullable = false)
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
