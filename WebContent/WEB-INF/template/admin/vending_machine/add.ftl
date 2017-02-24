@@ -27,10 +27,14 @@ $().ready(function() {
 	// 表单验证
 	$inputForm.validate({
 		rules: {
+			vendor_code: "required",
+			position: "required",
+			address: "required",
+			shophours: "required",
 			name: "required",
-			contact: "required",
-			areaId: "required",
-			address: "required"
+			discount: "required",
+			privilege: "required",
+			image: "required"
 		}
 	});
 

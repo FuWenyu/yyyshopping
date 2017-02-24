@@ -12,8 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.easyshopping.Message;
 import com.easyshopping.Pageable;
 import com.easyshopping.entity.BaseEntity.Save;
-import com.easyshopping.entity.Tag;
-import com.easyshopping.entity.Tag.Type;
 import com.easyshopping.entity.vendor;
 import com.easyshopping.service.VendingMachineService;
 
@@ -56,20 +54,19 @@ public class VendingMachineController extends BaseController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Long id, ModelMap model) {
-		model.addAttribute("types", Type.values());
-		//model.addAttribute("tag", tagService.find(id));
-		return "/admin/tag/edit";
+		model.addAttribute("vendor", vendingMachineService.find(id));
+		return "/admin/vending_machine/edit";
 	}
 
 	/**
 	 * 更新
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(Tag tag, RedirectAttributes redirectAttributes) {
-		if (!isValid(tag)) {
+	public String update(vendor bean, RedirectAttributes redirectAttributes) {
+		if (!isValid(bean)) {
 			return ERROR_VIEW;
 		}
-		//tagService.update(tag, "type", "articles", "products");
+		vendingMachineService.update(bean, "orders");
 		addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
 		return "redirect:list.jhtml";
 	}
@@ -88,7 +85,7 @@ public class VendingMachineController extends BaseController {
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody Message delete(Long[] ids) {
-		//tagService.delete(ids);
+		vendingMachineService.delete(ids);
 		return SUCCESS_MESSAGE;
 	}
 }
