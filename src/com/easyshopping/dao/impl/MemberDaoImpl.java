@@ -108,4 +108,15 @@ public class MemberDaoImpl extends BaseDaoImpl<Member, Long> implements MemberDa
 		return query.getResultList();
 	}
 
+	public Member login(String username) {
+		if (username == null) {
+			return null;
+		}
+		try {
+			String jpql = "select members from Member members where (lower(members.username) = lower(:username)) or (lower(members.email) = lower(:username)) or (members.mobile=:username)";
+			return entityManager.createQuery(jpql, Member.class).setFlushMode(FlushModeType.COMMIT).setParameter("username", username).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

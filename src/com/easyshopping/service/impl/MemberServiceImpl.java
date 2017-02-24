@@ -190,5 +190,10 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 		}
 		return null;
 	}
+	
+	@Transactional(readOnly = true)
+	public Member login(String username) {
+		return memberDao.login(username);
+	}
 
 }

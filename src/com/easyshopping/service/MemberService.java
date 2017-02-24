@@ -145,5 +145,14 @@ public interface MemberService extends BaseService<Member, Long> {
 	 * @return 当前登录用户名，若不存在则返回null
 	 */
 	String getCurrentUsername();
-
+	
+	/**
+	 * 登录
+	 *
+	 * @param username
+	 *            用户名(忽略大小写)
+	 * @return 会员，若不存在则返回null
+	 */
+	Member login(String username);
+	
 }
