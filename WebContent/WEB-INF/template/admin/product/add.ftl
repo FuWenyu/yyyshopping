@@ -5,13 +5,19 @@
 <title>${message("admin.product.add")} - EASY SHOPPING</title>
 <meta name="author" content="EASY SHOPPING Team" />
 <meta name="copyright" content="EASY SHOPPING" />
+<link href="${base}/resources/admin/ueditor/themes/default/css/ueditor.css" rel="stylesheet" type="text/css"/>
 <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
+
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.tools.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
-<script type="text/javascript" src="${base}/resources/admin/editor/kindeditor.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/input.js"></script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="${base}/resources/admin/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="${base}/resources/admin/ueditor/ueditor.all.js"></script>
+
 <style type="text/css">
 	.specificationSelect {
 		height: 100px;
@@ -589,7 +595,11 @@ $().ready(function() {
 		<table class="input tabContent">
 			<tr>
 				<td>
-					<textarea id="editor" name="introduction" class="editor" style="width: 100%;"></textarea>
+					<textarea id="container"></textarea>
+					<!-- 实例化编辑器 -->
+					<script type="text/javascript">
+					    UE.getEditor('container');
+					</script>
 				</td>
 			</tr>
 		</table>
