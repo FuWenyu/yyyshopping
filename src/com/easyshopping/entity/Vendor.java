@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "xx_vendor")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "xx_vendor_sequence")
-public class vendor extends OrderEntity {
+public class Vendor extends OrderEntity {
 
 	private static final long serialVersionUID = 5095521437302782717L;
 

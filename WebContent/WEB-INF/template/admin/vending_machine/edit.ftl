@@ -46,14 +46,14 @@ $().ready(function() {
 		<a href="${base}/admin/common/index.jhtml">${message("admin.path.index")}</a> &raquo; 编辑售货机
 	</div>
 	<form id="inputForm" action="update.jhtml" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="${vendor.id}" />
+		<input type="hidden" name="id" value="${Vendor.id}" />
 		<table class="input">
 			<tr>
 				<th>
 					<span class="requiredField">*</span>自动售货机编码:
 				</th>
 				<td>
-					<input type="text" name="vendor_code" class="text" value="${vendor.vendor_code}" maxlength="200" />
+					<input type="text" name="vendor_code" class="text" value="${Vendor.vendor_code}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -61,7 +61,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>坐标（经纬度）:
 				</th>
 				<td>
-					<input type="text" name="position" class="text" value="${vendor.position}" maxlength="200" />
+					<input type="text" name="position" class="text" value="${Vendor.position}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -70,7 +70,7 @@ $().ready(function() {
 				</th>
 				<td>
 					<span class="fieldSet">
-						<input type="text" id="address" name="address" value="${vendor.address}" class="text" />
+						<input type="text" id="address" name="address" value="${Vendor.address}" class="text" />
 					</span>
 				</td>
 			</tr>
@@ -79,7 +79,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>营业时间:
 				</th>
 				<td >
-					<input type="text" name="shophours" class="text" value="${vendor.shophours}" />
+					<input type="text" name="shophours" class="text" value="${Vendor.shophours}" />
 				</td>
 			</tr>
 			<tr>
@@ -87,7 +87,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>名称:
 				</th>
 				<td >
-					<input type="text" name="name" class="text" value="${vendor.name}" maxlength="200" />
+					<input type="text" name="name" class="text" value="${Vendor.name}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -95,7 +95,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>折扣:
 				</th>
 				<td>
-					<input type="text" name="discount" class="text" value="${vendor.discount}" maxlength="200" />
+					<input type="text" name="discount" class="text" value="${Vendor.discount}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -103,7 +103,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>优惠:
 				</th>
 				<td>
-					<input type="text" name="privilege" class="text" value="${vendor.privilege}" maxlength="200" />
+					<input type="text" name="privilege" class="text" value="${Vendor.privilege}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -111,8 +111,8 @@ $().ready(function() {
 					<span class="requiredField">*</span>图片:
 				</th>
 				<td>
-					<input type="hidden" name="image" value="${vendor.image}" />
-					<input type="file" name="imageFile" /><a href="${base}/${vendor.image}" target="_blank">${vendor.image}</a>
+					<input type="hidden" name="image" value="${Vendor.image}" />
+					<input type="file" name="imageFile" /><a href="${base}/${Vendor.image}" target="_blank">${Vendor.image}</a>
 				</td>
 			</tr>
 			<tr>

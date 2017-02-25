@@ -5,7 +5,9 @@
  */
 package com.easyshopping.service;
 
-import com.easyshopping.entity.vendor;
+import java.util.List;
+
+import com.easyshopping.entity.Vendor;
 
 /**
  * Service - 标签
@@ -13,7 +15,8 @@ import com.easyshopping.entity.vendor;
  * 
  * @version 1.0
  */
-public interface VendingMachineService extends BaseService<vendor, Long> {
+public interface VendingMachineService extends BaseService<Vendor, Long> {
 
-
+	List<Vendor> findList(String longitude,String latitude);
+	
 }

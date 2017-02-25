@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.easyshopping.Message;
 import com.easyshopping.Pageable;
 import com.easyshopping.entity.BaseEntity.Save;
-import com.easyshopping.entity.vendor;
+import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.VendingMachineService;
 
 /**
@@ -48,7 +48,7 @@ public class VendingMachineController extends BaseController {
 	 * 保存
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(vendor bean, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile file, HttpSession session) {
+	public String save(Vendor bean, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile file, HttpSession session) {
 		if (!isValid(bean, Save.class)) {
 			return ERROR_VIEW;
 		}
@@ -76,7 +76,7 @@ public class VendingMachineController extends BaseController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Long id, ModelMap model) {
-		model.addAttribute("vendor", vendingMachineService.find(id));
+		model.addAttribute("Vendor", vendingMachineService.find(id));
 		return "/admin/vending_machine/edit";
 	}
 
@@ -84,7 +84,7 @@ public class VendingMachineController extends BaseController {
 	 * 更新
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(vendor bean, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile file, HttpSession session) {
+	public String update(Vendor bean, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile file, HttpSession session) {
 		if (!isValid(bean)) {
 			return ERROR_VIEW;
 		}
