@@ -3989,7 +3989,7 @@ CREATE TABLE `xx_member` (
   `create_date` datetime NOT NULL,
   `modify_date` datetime NOT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `amount` decimal(27,12) NOT NULL,
+  `amount` decimal(27,12) DEFAULT NULL,
   `attribute_value0` varchar(255) DEFAULT NULL,
   `attribute_value1` varchar(255) DEFAULT NULL,
   `attribute_value2` varchar(255) DEFAULT NULL,
@@ -4000,9 +4000,9 @@ CREATE TABLE `xx_member` (
   `attribute_value7` varchar(255) DEFAULT NULL,
   `attribute_value8` varchar(255) DEFAULT NULL,
   `attribute_value9` varchar(255) DEFAULT NULL,
-  `balance` decimal(27,12) NOT NULL,
+  `balance` decimal(27,12) DEFAULT NULL,
   `birth` datetime DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
   `is_enabled` bit(1) NOT NULL,
   `is_locked` bit(1) NOT NULL,
@@ -4014,21 +4014,21 @@ CREATE TABLE `xx_member` (
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `point` bigint(20) NOT NULL,
-  `register_ip` varchar(255) NOT NULL,
+  `point` bigint(20) DEFAULT NULL,
+  `register_ip` varchar(255) DEFAULT NULL,
   `safe_key_expire` datetime DEFAULT NULL,
   `safe_key_value` varchar(255) DEFAULT NULL,
-  `username` varchar(100) NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
   `zip_code` varchar(255) DEFAULT NULL,
   `area` bigint(20) DEFAULT NULL,
-  `member_rank` bigint(20) NOT NULL,
+  `member_rank` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `FK92D398B939A0DADE` (`area`),
   KEY `FK92D398B937884F5B` (`member_rank`),
   CONSTRAINT `FK92D398B937884F5B` FOREIGN KEY (`member_rank`) REFERENCES `xx_member_rank` (`id`),
   CONSTRAINT `FK92D398B939A0DADE` FOREIGN KEY (`area`) REFERENCES `xx_area` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of xx_member

@@ -45,7 +45,7 @@ $().ready(function() {
 	<div class="path">
 		<a href="${base}/admin/common/index.jhtml">${message("admin.path.index")}</a> &raquo; 编辑售货机
 	</div>
-	<form id="inputForm" action="update.jhtml" method="post">
+	<form id="inputForm" action="update.jhtml" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${vendor.id}" />
 		<table class="input">
 			<tr>
@@ -70,7 +70,7 @@ $().ready(function() {
 				</th>
 				<td>
 					<span class="fieldSet">
-						<input type="text" id="address" name="address" value="${vendor.address}" />
+						<input type="text" id="address" name="address" value="${vendor.address}" class="text" />
 					</span>
 				</td>
 			</tr>
@@ -111,7 +111,8 @@ $().ready(function() {
 					<span class="requiredField">*</span>图片:
 				</th>
 				<td>
-					<input type="text" name="image" value="${vendor.image}" />
+					<input type="hidden" name="image" value="${vendor.image}" />
+					<input type="file" name="imageFile" /><a href="${base}/${vendor.image}" target="_blank">${vendor.image}</a>
 				</td>
 			</tr>
 			<tr>

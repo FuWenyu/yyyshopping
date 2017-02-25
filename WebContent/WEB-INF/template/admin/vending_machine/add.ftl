@@ -45,7 +45,7 @@ $().ready(function() {
 	<div class="path">
 		<a href="${base}/admin/common/index.jhtml">${message("admin.path.index")}</a> &raquo; 添加售货机
 	</div>
-	<form id="inputForm" action="save.jhtml" method="post">
+	<form id="inputForm" action="save.jhtml" method="post" enctype="multipart/form-data">
 		<table class="input">
 			<tr>
 				<th>
@@ -69,7 +69,7 @@ $().ready(function() {
 				</th>
 				<td>
 					<span class="address">
-						<input type="text" id="address" name="address" />
+						<input type="text" id="address" name="address" class="text" />
 					</span>
 				</td>
 			</tr>
@@ -110,7 +110,8 @@ $().ready(function() {
 					<span class="requiredField">*</span>图片:
 				</th>
 				<td>
-					<input type="text" name="image" value="false" />
+					<input type="hidden" name="image" value="imagePath" />
+					<input type="file" name="imageFile" />
 				</td>
 			</tr>
 			<tr>

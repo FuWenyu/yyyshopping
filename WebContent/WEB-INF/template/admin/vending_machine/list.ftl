@@ -152,7 +152,7 @@ $().ready(function() {
 						${vendor.privilege}
 					</td>
 					<td>
-						${vendor.image}
+						<a href="${base}/${vendor.image}" target="_blank">${vendor.image}</a>
 					</td>
 					<td>
 						<a href="edit.jhtml?id=${vendor.id}">[编辑]</a>

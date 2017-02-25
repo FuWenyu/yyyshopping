@@ -6,6 +6,7 @@
 package com.easyshopping.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.easyshopping.entity.ProductCategory;
 
@@ -17,6 +18,13 @@ import com.easyshopping.entity.ProductCategory;
  */
 public interface ProductCategoryService extends BaseService<ProductCategory, Long> {
 
+	
+	/**
+	 * 级别查找商品分类
+	 * 
+	 * @return 商品分类列表
+	 */
+	List<Map<String,Object>> findList(Integer grade);
 	/**
 	 * 查找顶级商品分类
 	 * 
