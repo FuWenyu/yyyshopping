@@ -870,15 +870,15 @@ $().ready(function() {
 		<li>
 			<input type="button" value="${message("admin.order.paymentInfo")}" />
 		</li>
-		<li>
+		<!--<li>
 			<input type="button" value="${message("admin.order.shippingInfo")}" />
-		</li>
+		</li>-->
 		<li>
 			<input type="button" value="${message("admin.order.refundsInfo")}" />
 		</li>
-		<li>
+		<!--<li>
 			<input type="button" value="${message("admin.order.returnsInfo")}" />
-		</li>
+		</li>-->
 		<li>
 			<input type="button" value="${message("admin.order.orderLog")}" />
 		</li>
@@ -891,7 +891,7 @@ $().ready(function() {
 			<td>
 				<input type="button" id="confirmButton" class="button" value="${message("admin.order.confirm")}"[#if order.expired || order.orderStatus != "unconfirmed"] disabled="disabled"[/#if] />
 				<input type="button" id="paymentButton" class="button" value="${message("admin.order.payment")}"[#if order.expired || order.orderStatus != "confirmed" || (order.paymentStatus != "unpaid" && order.paymentStatus != "partialPayment")] disabled="disabled"[/#if] />
-				<input type="button" id="shippingButton" class="button" value="${message("admin.order.shipping")}"[#if order.expired || order.orderStatus != "confirmed" || (order.shippingStatus != "unshipped" && order.shippingStatus != "partialShipment")] disabled="disabled"[/#if] />
+				<!--<input type="button" id="shippingButton" class="button" value="${message("admin.order.shipping")}"[#if order.expired || order.orderStatus != "confirmed" || (order.shippingStatus != "unshipped" && order.shippingStatus != "partialShipment")] disabled="disabled"[/#if] />-->
 				<input type="button" id="completeButton" class="button" value="${message("admin.order.complete")}"[#if order.expired || order.orderStatus != "confirmed"] disabled="disabled"[/#if] />
 			</td>
 			<td>
@@ -899,7 +899,7 @@ $().ready(function() {
 			</td>
 			<td>
 				<input type="button" id="refundsButton" class="button" value="${message("admin.order.refunds")}"[#if order.expired || order.orderStatus != "confirmed" || (order.paymentStatus != "paid" && order.paymentStatus != "partialPayment" && order.paymentStatus != "partialRefunds")] disabled="disabled"[/#if] />
-				<input type="button" id="returnsButton" class="button" value="${message("admin.order.returns")}"[#if order.expired || order.orderStatus != "confirmed" || (order.shippingStatus != "shipped" && order.shippingStatus != "partialShipment" && order.shippingStatus != "partialReturns")] disabled="disabled"[/#if] />
+				<!--<input type="button" id="returnsButton" class="button" value="${message("admin.order.returns")}"[#if order.expired || order.orderStatus != "confirmed" || (order.shippingStatus != "shipped" && order.shippingStatus != "partialShipment" && order.shippingStatus != "partialReturns")] disabled="disabled"[/#if] />-->
 				<input type="button" id="cancelButton" class="button" value="${message("admin.order.cancel")}"[#if order.expired || order.orderStatus != "unconfirmed"] disabled="disabled"[/#if] />
 			</td>
 		</tr>
@@ -1121,12 +1121,12 @@ $().ready(function() {
 			<th>
 				${message("OrderItem.quantity")}
 			</th>
-			<th>
+			<!--<th>
 				${message("OrderItem.shippedQuantity")}
 			</th>
 			<th>
 				${message("OrderItem.returnQuantity")}
-			</th>
+			</th>-->
 			<th>
 				${message("OrderItem.subtotal")}
 			</th>
@@ -1152,12 +1152,12 @@ $().ready(function() {
 				<td>
 					${orderItem.quantity}
 				</td>
-				<td>
+				<!--<td>
 					${orderItem.shippedQuantity}
 				</td>
 				<td>
 					${orderItem.returnQuantity}
-				</td>
+				</td>-->
 				<td>
 					[#if !orderItem.isGift]
 						${currency(orderItem.subtotal, true)}
@@ -1173,9 +1173,9 @@ $().ready(function() {
 			<th>
 				${message("Payment.sn")}
 			</th>
-			<th>
+			<!--<th>
 				${message("Payment.method")}
-			</th>
+			</th>-->
 			<th>
 				${message("Payment.paymentMethod")}
 			</th>
@@ -1194,9 +1194,9 @@ $().ready(function() {
 				<td>
 					${payment.sn}
 				</td>
-				<td>
+				<!--<td>
 					${message("Payment.Method." + payment.method)}
-				</td>
+				</td>-->
 				<td>
 					${(payment.paymentMethod)!"-"}
 				</td>
@@ -1216,7 +1216,7 @@ $().ready(function() {
 			</tr>
 		[/#list]
 	</table>
-	<table class="input tabContent">
+	<!--<table class="input tabContent">
 		<tr class="title">
 			<th>
 				${message("Shipping.sn")}
@@ -1259,15 +1259,15 @@ $().ready(function() {
 				</td>
 			</tr>
 		[/#list]
-	</table>
+	</table>-->
 	<table class="input tabContent">
 		<tr class="title">
 			<th>
 				${message("Refunds.sn")}
 			</th>
-			<th>
+			<!--<th>
 				${message("Refunds.method")}
-			</th>
+			</th>-->
 			<th>
 				${message("Refunds.paymentMethod")}
 			</th>
@@ -1283,9 +1283,9 @@ $().ready(function() {
 				<td>
 					${refunds.sn}
 				</td>
-				<td>
+				<!--<td>
 					${message("Refunds.Method." + refunds.method)}
-				</td>
+				</td>-->
 				<td>
 					${refunds.paymentMethod!"-"}
 				</td>
@@ -1298,7 +1298,7 @@ $().ready(function() {
 			</tr>
 		[/#list]
 	</table>
-	<table class="input tabContent">
+	<!--<table class="input tabContent">
 		<tr class="title">
 			<th>
 				${message("Returns.sn")}
@@ -1341,7 +1341,7 @@ $().ready(function() {
 				</td>
 			</tr>
 		[/#list]
-	</table>
+	</table>-->
 	<table class="input tabContent">
 		<tr class="title">
 			<th>

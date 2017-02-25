@@ -50,7 +50,7 @@ $().ready(function() {
 				${(payment.paymentDate?string("yyyy-MM-dd HH:mm:ss"))!"-"}
 			</td>
 		</tr>
-		<tr>
+		<!--<tr>
 			<th>
 				${message("Payment.type")}:
 			</th>
@@ -63,7 +63,7 @@ $().ready(function() {
 			<td>
 				${message("Payment.Method." + payment.method)}
 			</td>
-		</tr>
+		</tr>-->
 		<tr>
 			<th>
 				${message("Payment.paymentMethod")}:

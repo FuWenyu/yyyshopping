@@ -78,12 +78,12 @@ $().ready(function() {
 				<th>
 					<a href="javascript:;" class="sort" name="sn">${message("Payment.sn")}</a>
 				</th>
-				<th>
+				<!--<th>
 					<a href="javascript:;" class="sort" name="type">${message("Payment.type")}</a>
 				</th>
 				<th>
 					<a href="javascript:;" class="sort" name="method">${message("Payment.method")}</a>
-				</th>
+				</th>-->
 				<th>
 					<a href="javascript:;" class="sort" name="paymentMethod">${message("Payment.paymentMethod")}</a>
 				</th>
@@ -117,12 +117,12 @@ $().ready(function() {
 					<td>
 						${payment.sn}
 					</td>
-					<td>
+					<!--<td>
 						${message("Payment.Type." + payment.type)}
 					</td>
 					<td>
 						${message("Payment.Method." + payment.method)}
-					</td>
+					</td>-->
 					<td>
 						${payment.paymentMethod}
 					</td>

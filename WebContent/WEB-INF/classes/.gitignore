@@ -1,1 +1,6 @@
-/com/
+/admin
+/applicationContext-mvc.xml
+/applicationContext-shiro.xml
+/applicationContext.xml
+/com
+/shop

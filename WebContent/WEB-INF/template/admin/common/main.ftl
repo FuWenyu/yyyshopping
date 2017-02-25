@@ -210,7 +210,7 @@ $().ready(function() {
 							<a href="../refunds/list.jhtml" target="iframe">${message("admin.main.refunds")}</a>
 						</dd>
 					[/@shiro.hasPermission]
-					[@shiro.hasPermission name="admin:shipping"]
+					<!--[@shiro.hasPermission name="admin:shipping"]
 						<dd>
 							<a href="../shipping/list.jhtml" target="iframe">${message("admin.main.shipping")}</a>
 						</dd>
@@ -229,7 +229,7 @@ $().ready(function() {
 						<dd>
 							<a href="../delivery_template/list.jhtml" target="iframe">${message("admin.main.deliveryTemplate")}</a>
 						</dd>
-					[/@shiro.hasPermission]
+					[/@shiro.hasPermission]-->
 				</dl>
 				<dl id="member">
 					<dt>${message("admin.main.memberGroup")}</dt>

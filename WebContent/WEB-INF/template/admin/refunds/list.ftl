@@ -78,9 +78,9 @@ $().ready(function() {
 				<th>
 					<a href="javascript:;" class="sort" name="sn">${message("Refunds.sn")}</a>
 				</th>
-				<th>
+				<!--<th>
 					<a href="javascript:;" class="sort" name="type">${message("Refunds.method")}</a>
-				</th>
+				</th>-->
 				<th>
 					<a href="javascript:;" class="sort" name="paymentMethod">${message("Refunds.paymentMethod")}</a>
 				</th>

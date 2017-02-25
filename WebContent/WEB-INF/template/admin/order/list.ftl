@@ -181,7 +181,7 @@ $().ready(function() {
 				<th>
 					<a href="javascript:;" class="sort" name="member">${message("Order.member")}</a>
 				</th>
-				<th>
+				<!--<th>
 					<a href="javascript:;" class="sort" name="consignee">${message("Order.consignee")}</a>
 				</th>
 				<th>
@@ -189,16 +189,16 @@ $().ready(function() {
 				</th>
 				<th>
 					<a href="javascript:;" class="sort" name="shippingMethodName">${message("Order.shippingMethodName")}</a>
-				</th>
+				</th>-->
 				<th>
 					<a href="javascript:;" class="sort" name="orderStatus">${message("Order.orderStatus")}</a>
 				</th>
 				<th>
 					<a href="javascript:;" class="sort" name="paymentStatus">${message("Order.paymentStatus")}</a>
 				</th>
-				<th>
+				<!--<th>
 					<a href="javascript:;" class="sort" name="shippingStatus">${message("Order.shippingStatus")}</a>
-				</th>
+				</th>-->
 				<th>
 					<a href="javascript:;" class="sort" name="createDate">${message("admin.common.createDate")}</a>
 				</th>
@@ -225,7 +225,7 @@ $().ready(function() {
 					<td>
 						${order.member.username}
 					</td>
-					<td>
+					<!--<td>
 						${order.consignee}
 					</td>
 					<td>
@@ -233,7 +233,7 @@ $().ready(function() {
 					</td>
 					<td>
 						${order.shippingMethodName}
-					</td>
+					</td>-->
 					<td>
 						${message("Order.OrderStatus." + order.orderStatus)}
 						[#if order.expired]<span class="gray">(${message("admin.order.hasExpired")})</span>[/#if]
@@ -241,9 +241,9 @@ $().ready(function() {
 					<td>
 						${message("Order.PaymentStatus." + order.paymentStatus)}
 					</td>
-					<td>
+					<!--<td>
 						${message("Order.ShippingStatus." + order.shippingStatus)}
-					</td>
+					</td>-->
 					<td>
 						<span title="${order.createDate?string("yyyy-MM-dd HH:mm:ss")}">${order.createDate}</span>
 					</td>

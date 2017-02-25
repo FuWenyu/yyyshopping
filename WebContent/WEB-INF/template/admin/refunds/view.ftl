@@ -36,7 +36,7 @@ $().ready(function() {
 				${refunds.createDate?string("yyyy-MM-dd HH:mm:ss")}
 			</td>
 		</tr>
-		<tr>
+		<!--<tr>
 			<th>
 				${message("Refunds.method")}:
 			</th>
@@ -49,7 +49,7 @@ $().ready(function() {
 			<td>
 				${(refunds.paymentMethod)!"-"}
 			</td>
-		</tr>
+		</tr>-->
 		<tr>
 			<th>
 				${message("Refunds.bank")}:
@@ -94,9 +94,15 @@ $().ready(function() {
 		</tr>
 		<tr>
 			<th>
+				${message("Refunds.paymentMethod")}:
+			</th>
+			<td>
+				${(refunds.paymentMethod)!"-"}
+			</td>
+			<th>
 				${message("Refunds.memo")}:
 			</th>
-			<td colspan="3">
+			<td><!--colspan="3">
 				${refunds.memo}
 			</td>
 		</tr>
