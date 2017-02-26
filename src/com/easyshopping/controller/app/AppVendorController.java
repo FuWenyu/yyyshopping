@@ -37,7 +37,7 @@ public class AppVendorController extends BaseController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list")
 	@ResponseBody
 	public AppMessage list(HttpServletRequest httpServletRequest) {
 		String longitude = (String)httpServletRequest.getAttribute("longitude");
