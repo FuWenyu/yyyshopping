@@ -5369,6 +5369,7 @@ INSERT INTO `xx_role_authority` VALUES ('1', 'admin:role');
 INSERT INTO `xx_role_authority` VALUES ('1', 'admin:message');
 INSERT INTO `xx_role_authority` VALUES ('1', 'admin:log');
 INSERT INTO `xx_role_authority` VALUES ('1', 'admin:vendingMachine');
+INSERT INTO `xx_role_authority` VALUES ('1', 'admin:inventory');
 
 -- ----------------------------
 -- Table structure for xx_seo
