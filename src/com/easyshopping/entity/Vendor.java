@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Entity - 自动售货机
  * 
@@ -56,6 +58,7 @@ public class Vendor extends OrderEntity {
 	/** 图片 */
 	private String image;
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 10)
 	@Column(nullable = false)
@@ -67,6 +70,7 @@ public class Vendor extends OrderEntity {
 		this.vendor_code = vendor_code;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 50)
 	@Column(nullable = false)
@@ -78,6 +82,7 @@ public class Vendor extends OrderEntity {
 		this.position = position;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
@@ -89,6 +94,7 @@ public class Vendor extends OrderEntity {
 		this.address = address;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 10)
 	@Column(nullable = false)
@@ -100,6 +106,7 @@ public class Vendor extends OrderEntity {
 		this.shophours = shophours;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 50)
 	@Column(nullable = false)
@@ -111,6 +118,7 @@ public class Vendor extends OrderEntity {
 		this.name = name;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 10)
 	@Column(nullable = false)
@@ -122,6 +130,7 @@ public class Vendor extends OrderEntity {
 		this.discount = discount;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 50)
 	@Column(nullable = false)
@@ -133,6 +142,7 @@ public class Vendor extends OrderEntity {
 		this.privilege = privilege;
 	}
 
+	@JsonProperty
 	@NotEmpty
 	@Length(max = 100)
 	@Column(nullable = false)
