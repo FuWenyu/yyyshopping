@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>${message("admin.deliveryCenter.edit")} - EASY SHOPPING</title>
+<title>${message("admin.deliveryCenter.add")} - EASY SHOPPING</title>
 <meta name="author" content="EASY SHOPPING Team" />
 <meta name="copyright" content="EASY SHOPPING" />
 <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
@@ -28,13 +28,10 @@ $().ready(function() {
 	$inputForm.validate({
 		rules: {
 			vendor_code: "required",
-			position: "required",
-			address: "required",
-			shophours: "required",
-			name: "required",
-			discount: "required",
-			privilege: "required",
-			image: "required"
+			vendor_name: "required",
+			sn: "required",
+			product_name: "required",
+			number: "required"
 		}
 	});
 
@@ -43,76 +40,64 @@ $().ready(function() {
 </head>
 <body>
 	<div class="path">
-		<a href="${base}/admin/common/index.jhtml">${message("admin.path.index")}</a> &raquo; 编辑售货机
+		<a href="${base}/admin/common/index.jhtml">${message("admin.path.index")}</a> &raquo; 添加售货机
 	</div>
-	<form id="inputForm" action="update.jhtml" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="${Vendor.id}" />
+	<form id="inputForm" action="save.jhtml" method="post">
 		<table class="input">
 			<tr>
 				<th>
-					<span class="requiredField">*</span>自动售货机编码:
+					<span class="requiredField">*</span>售货机ID:
 				</th>
 				<td>
-					<input type="text" name="vendor_code" class="text" value="${Vendor.vendor_code}" maxlength="200" />
+					<input type="text" name="vendor_id" class="text" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<span class="requiredField">*</span>坐标（经纬度）:
+					<span class="requiredField">*</span>售货机编码:
 				</th>
 				<td>
-					<input type="text" name="position" class="text" value="${Vendor.position}" maxlength="200" />
+					<input type="text" name="vendor_code" class="text" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<span class="requiredField">*</span>地址:
+					<span class="requiredField">*</span>售货机名称:
 				</th>
 				<td>
-					<span class="fieldSet">
-						<input type="text" id="address" name="address" value="${Vendor.address}" class="text" />
-					</span>
+					<input type="text" name="vendor_name" class="text" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<span class="requiredField">*</span>营业时间:
-				</th>
-				<td >
-					<input type="text" name="shophours" class="text" value="${Vendor.shophours}" />
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span class="requiredField">*</span>名称:
-				</th>
-				<td >
-					<input type="text" name="name" class="text" value="${Vendor.name}" maxlength="200" />
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span class="requiredField">*</span>折扣:
+					<span class="requiredField">*</span>商品ID:
 				</th>
 				<td>
-					<input type="text" name="discount" class="text" value="${Vendor.discount}" maxlength="200" />
+					<input type="text" name="product_id" class="text" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<span class="requiredField">*</span>优惠:
+					<span class="requiredField">*</span>商品编码:
 				</th>
 				<td>
-					<input type="text" name="privilege" class="text" value="${Vendor.privilege}" maxlength="200" />
+					<input type="text" id="sn" name="sn" class="text" />
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<span class="requiredField">*</span>图片:
+					<span class="requiredField">*</span>商品名称:
 				</th>
 				<td>
-					<input type="hidden" name="image" value="${Vendor.image}" />
-					<input type="file" name="imageFile" /><a href="${base}/${Vendor.image}" target="_blank">${Vendor.image}</a>
+					<input type="text" name="product_name" class="text" maxlength="200" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<span class="requiredField">*</span>余量:
+				</th>
+				<td>
+					<input type="text" name="number" class="text" maxlength="200" />
 				</td>
 			</tr>
 			<tr>

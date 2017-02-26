@@ -154,6 +154,11 @@ $().ready(function() {
 							<a href="../vending_machine/list.jhtml" target="iframe">${message("admin.main.vendingMachineGroup")}</a>
 						</dd>
 					[/@shiro.hasPermission]
+					[@shiro.hasPermission name="admin:inventory"]
+						<dd>
+							<a href="../inventory/list.jhtml" target="iframe">库存管理</a>
+						</dd>
+					[/@shiro.hasPermission]
 				</dl>
 				<dl id="product">
 					<dt>${message("admin.main.productGroup")}</dt>
