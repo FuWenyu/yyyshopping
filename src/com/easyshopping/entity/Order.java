@@ -115,6 +115,18 @@ public class Order extends BaseEntity {
 		/** 已退货 */
 		returned
 	}
+	
+	/**
+	 * 配送状态
+	 */
+	public enum TakeStatus {
+
+		/** 未取货 */
+		untaked,
+
+		/** 已取货 */
+		taked,
+	}
 
 	/** 订单编号 */
 	private String sn;
@@ -211,6 +223,12 @@ public class Order extends BaseEntity {
 
 	/** 优惠码 */
 	private CouponCode couponCode;
+	
+	/** 取货码 */
+	private String takeCode;
+	
+	/** 配送状态 */
+	private TakeStatus takeStatus;
 
 	/** 优惠券 */
 	private List<Coupon> coupons = new ArrayList<Coupon>();
@@ -235,6 +253,48 @@ public class Order extends BaseEntity {
 
 	/** 退货单 */
 	private Set<Returns> returns = new HashSet<Returns>();
+	
+	
+
+	/**
+	 * 获取取货码
+	 * 
+	 * @return 取货码
+	 */
+	@Column(nullable = false, updatable = false, length = 30)
+	public String getTakeCode() {
+		return takeCode;
+	}
+
+	/**
+	 * 设置取货码
+	 * 
+	 * @param takeCode
+	 *            取货码
+	 */
+	public void setTakeCode(String takeCode) {
+		this.takeCode = takeCode;
+	}
+
+	/**
+	 * 获取取货状态
+	 * 
+	 * @return 订单编号
+	 */
+	@Column(nullable = false, length = 11)
+	public TakeStatus getTakeStatus() {
+		return takeStatus;
+	}
+
+	/**
+	 * 设置取货状态
+	 * 
+	 * @param takeStatus
+	 *            取货状态
+	 */
+	public void setTakeStatus(TakeStatus takeStatus) {
+		this.takeStatus = takeStatus;
+	}
 
 	/**
 	 * 获取订单编号

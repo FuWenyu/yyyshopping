@@ -4233,6 +4233,8 @@ CREATE TABLE `xx_order` (
   `operator` bigint(20) DEFAULT NULL,
   `payment_method` bigint(20) DEFAULT NULL,
   `shipping_method` bigint(20) DEFAULT NULL,
+  `take_code` varchar(30) NOT NULL COMMENT '取货码',
+  `take_status` int(11) NOT NULL COMMENT '取货状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `sn` (`sn`),
   KEY `FK25E6B94F67F7C585` (`shipping_method`),

@@ -937,17 +937,37 @@ $().ready(function() {
 			</td>
 		</tr>
 		<tr>
-			<th>
+			<!--<th>
 				${message("Order.shippingStatus")}:
 			</th>
 			<td>
 				${message("Order.ShippingStatus." + order.shippingStatus)}
+			</td>-->
+			<th>
+				${message("Order.paymentMethod")}:
+			</th>
+			<td>
+				${order.paymentMethodName}
 			</td>
 			<th>
 				${message("Member.username")}:
 			</th>
 			<td>
 				${order.member.username}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				${message("Order.takeCode")}:
+			</th>
+			<td>
+				${order.takeCode}
+			</td>
+			<th>
+				${message("Order.takeStatus")}:
+			</th>
+			<td>
+				${message("Order.TakeStatus." + order.takeStatus)}
 			</td>
 		</tr>
 		<tr>
@@ -964,7 +984,7 @@ $().ready(function() {
 				${currency(order.amountPaid, true)}
 			</td>
 		</tr>
-		<tr>
+		<!--<tr>
 			<th>
 				${message("Order.weight")}:
 			</th>
@@ -972,10 +992,10 @@ $().ready(function() {
 				${order.weight}
 			</td>
 			<th>
-				${message("Order.quantity")}:
+				${message("Order.offsetAmount")}:
 			</th>
 			<td>
-				${order.quantity}
+				${currency(order.offsetAmount, true)}
 			</td>
 		</tr>
 		<tr>
@@ -1005,13 +1025,13 @@ $().ready(function() {
 			<td>
 				${currency(order.couponDiscount, true)}
 			</td>
-		</tr>
+		</tr>-->
 		<tr>
 			<th>
-				${message("Order.offsetAmount")}:
+				${message("Order.quantity")}:
 			</th>
 			<td>
-				${currency(order.offsetAmount, true)}
+				${order.quantity}
 			</td>
 			<th>
 				${message("Order.point")}:
@@ -1020,7 +1040,7 @@ $().ready(function() {
 				${order.point}
 			</td>
 		</tr>
-		<tr>
+		<!--<tr>
 			<th>
 				${message("Order.freight")}:
 			</th>
@@ -1047,7 +1067,7 @@ $().ready(function() {
 			<td>
 				${order.shippingMethodName}
 			</td>
-		</tr>
+		</tr>-->
 		[#if order.isInvoice]
 			<tr>
 				<th>
@@ -1065,44 +1085,45 @@ $().ready(function() {
 			</tr>
 		[/#if]
 		<tr>
-			<th>
+			<!--<th>
 				${message("Order.consignee")}:
 			</th>
 			<td>
 				${order.consignee}
-			</td>
+			</td>-->
 			<th>
 				${message("Order.area")}:
 			</th>
 			<td>
 				${order.areaName}
 			</td>
-		</tr>
-		<tr>
 			<th>
 				${message("Order.address")}:
 			</th>
 			<td>
 				${order.address}
 			</td>
+		</tr>
+		<tr>
+			
 			<th>
 				${message("Order.zipCode")}:
 			</th>
 			<td>
 				${order.zipCode}
 			</td>
-		</tr>
-		<tr>
 			<th>
 				${message("Order.phone")}:
 			</th>
 			<td>
 				${order.phone}
 			</td>
-			<th>
+		</tr>
+		<tr>
+			<th >
 				${message("Order.memo")}:
 			</th>
-			<td>
+			<td colSpan="3">
 				${order.memo}
 			</td>
 		</tr>

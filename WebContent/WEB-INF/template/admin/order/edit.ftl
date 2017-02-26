@@ -311,17 +311,42 @@ $().ready(function() {
 				</td>
 			</tr>
 			<tr>
-				<th>
+				<!--<th>
 					${message("Order.shippingStatus")}:
 				</th>
 				<td>
 					${message("Order.ShippingStatus." + order.shippingStatus)}
+				</td>-->
+				<th>
+					${message("Order.paymentMethod")}:
+				</th>
+				<td>
+					<select name="paymentMethodId">
+						<option value="">${message("admin.common.choose")}</option>
+						[#list paymentMethods as paymentMethod]
+							<option value="${paymentMethod.id}"[#if paymentMethod == order.paymentMethod] selected="selected"[/#if]>${paymentMethod.name}</option>
+						[/#list]
+					</select>
 				</td>
 				<th>
 					${message("Member.username")}:
 				</th>
 				<td>
 					<a href="../member/view.jhtml?id=${order.member.id}">${order.member.username}</a>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					${message("Order.takeCode")}:
+				</th>
+				<td>
+					${order.takeCode}
+				</td>
+				<th>
+					${message("Order.takeStatus")}:
+				</th>
+				<td>
+					${message("Order.TakeStatus." + order.takeStatus)}
 				</td>
 			</tr>
 			<tr>
@@ -338,7 +363,7 @@ $().ready(function() {
 					${currency(order.amountPaid, true)}
 				</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<th>
 					${message("Order.weight")}:
 				</th>
@@ -346,10 +371,10 @@ $().ready(function() {
 					<span id="weight">${order.weight}</span>
 				</td>
 				<th>
-					${message("Order.quantity")}:
+					${message("Order.offsetAmount")}:
 				</th>
 				<td>
-					<span id="quantity">${order.quantity}</span>
+					<input type="text" name="offsetAmount" class="text" value="${order.offsetAmount}" maxlength="16" />
 				</td>
 			</tr>
 			<tr>
@@ -379,13 +404,13 @@ $().ready(function() {
 				<td>
 					${currency(order.couponDiscount, true)}
 				</td>
-			</tr>
+			</tr>-->
 			<tr>
 				<th>
-					${message("Order.offsetAmount")}:
+					${message("Order.quantity")}:
 				</th>
 				<td>
-					<input type="text" name="offsetAmount" class="text" value="${order.offsetAmount}" maxlength="16" />
+					<span id="quantity">${order.quantity}</span>
 				</td>
 				<th>
 					${message("Order.point")}:
@@ -394,7 +419,7 @@ $().ready(function() {
 					<input type="text" name="point" class="text" value="${order.point}" maxlength="9" />
 				</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<th>
 					${message("Order.freight")}:
 				</th>
@@ -431,7 +456,7 @@ $().ready(function() {
 						[/#list]
 					</select>
 				</td>
-			</tr>
+			</tr>-->
 			<tr>
 				<th>
 					${message("Order.invoiceTitle")}:
@@ -453,12 +478,12 @@ $().ready(function() {
 				</td>
 			</tr>
 			<tr>
-				<th>
+				<!--<th>
 					${message("Order.consignee")}:
 				</th>
 				<td>
 					<input type="text" name="consignee" class="text" value="${order.consignee}" maxlength="200" />
-				</td>
+				</td>-->
 				<th>
 					${message("Order.area")}:
 				</th>
@@ -467,19 +492,11 @@ $().ready(function() {
 						<input type="hidden" id="areaId" name="areaId" value="${(order.area.id)!}" treePath="${(order.area.treePath)!}" />
 					</span>
 				</td>
-			</tr>
-			<tr>
 				<th>
 					${message("Order.address")}:
 				</th>
 				<td>
 					<input type="text" name="address" class="text" value="${order.address}" maxlength="200" />
-				</td>
-				<th>
-					${message("Order.zipCode")}:
-				</th>
-				<td>
-					<input type="text" name="zipCode" class="text" value="${order.zipCode}" maxlength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -490,9 +507,17 @@ $().ready(function() {
 					<input type="text" name="phone" class="text" value="${order.phone}" maxlength="200" />
 				</td>
 				<th>
-					${message("Order.memo")}:
+					${message("Order.zipCode")}:
 				</th>
 				<td>
+					<input type="text" name="zipCode" class="text" value="${order.zipCode}" maxlength="200" />
+				</td>
+			</tr>
+			<tr>
+				<th>
+					${message("Order.memo")}:
+				</th>
+				<td colSpan="3">
 					<input type="text" name="memo" class="text" value="${order.memo}" maxlength="200" />
 				</td>
 			</tr>

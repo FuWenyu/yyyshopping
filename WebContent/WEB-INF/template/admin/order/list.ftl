@@ -176,6 +176,9 @@ $().ready(function() {
 					<a href="javascript:;" class="sort" name="sn">${message("Order.sn")}</a>
 				</th>
 				<th>
+					<span>${message("Order.takeCode")}</span>
+				</th>
+				<th>
 					<span>${message("Order.amount")}</span>
 				</th>
 				<th>
@@ -200,6 +203,9 @@ $().ready(function() {
 					<a href="javascript:;" class="sort" name="shippingStatus">${message("Order.shippingStatus")}</a>
 				</th>-->
 				<th>
+					<a href="javascript:;" class="sort" name="TakeStatus">${message("Order.takeStatus")}</a>
+				</th>
+				<th>
 					<a href="javascript:;" class="sort" name="createDate">${message("admin.common.createDate")}</a>
 				</th>
 				[@shiro.hasPermission name = "admin:print"]
@@ -218,6 +224,9 @@ $().ready(function() {
 					</td>
 					<td>
 						${order.sn}
+					</td>
+					<td>
+						${order.takeCode}
 					</td>
 					<td>
 						${currency(order.amount, true)}
@@ -244,6 +253,9 @@ $().ready(function() {
 					<!--<td>
 						${message("Order.ShippingStatus." + order.shippingStatus)}
 					</td>-->
+					<td>
+						${message("Order.TakeStatus." + order.takeStatus)}
+					</td>
 					<td>
 						<span title="${order.createDate?string("yyyy-MM-dd HH:mm:ss")}">${order.createDate}</span>
 					</td>
