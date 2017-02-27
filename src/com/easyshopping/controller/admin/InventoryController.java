@@ -14,6 +14,7 @@ import com.easyshopping.Pageable;
 import com.easyshopping.entity.BaseEntity.Save;
 import com.easyshopping.entity.Inventory;
 import com.easyshopping.service.InventoryService;
+import com.easyshopping.service.VendingMachineService;
 
 /**
  * Controller - 库存（商品、售货机关联）
@@ -27,12 +28,16 @@ public class InventoryController extends BaseController {
 
 	@Resource(name = "inventoryServiceImpl")
 	private InventoryService inventoryService;
+	
+	@Resource(name = "vendingMachineServiceImpl")
+	private VendingMachineService vendingMachineService;
 
 	/**
 	 * 添加
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap model) {
+		model.addAttribute("vendorList", vendingMachineService.findAll());
 		return "/admin/inventory/add";
 	}
 
