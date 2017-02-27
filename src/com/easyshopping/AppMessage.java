@@ -6,6 +6,7 @@
 package com.easyshopping;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息
@@ -38,6 +39,8 @@ public class AppMessage {
 	private String content;
 
 	private List<?> list;
+	
+	private Map<?,?> map;
 	/**
 	 * 初始化一个新创建的 Message 对象，使其表示一个空消息。
 	 */
@@ -57,6 +60,20 @@ public class AppMessage {
 		this.type = type;
 		this.content = content;
 		this.list = list;
+	}
+	
+	/**
+	 * 初始化一个新创建的 Message 对象
+	 * 
+	 * @param type
+	 *            类型
+	 * @param content
+	 *            内容
+	 */
+	public AppMessage(Type type, String content,Map<?,?> map) {
+		this.type = type;
+		this.content = content;
+		this.map = map;
 	}
 
 
@@ -97,6 +114,45 @@ public class AppMessage {
 	 */
 	public static AppMessage error(String content, List<?> list) {
 		return new AppMessage(Type.error, content,list);
+	}
+	
+	/**
+	 * 返回成功消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 成功消息
+	 */
+	public static AppMessage success(String content, Map<?,?> map) {
+		return new AppMessage(Type.success, content,map);
+	}
+
+	/**
+	 * 返回警告消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 警告消息
+	 */
+	public static AppMessage warn(String content,Map<?,?> map) {
+		return new AppMessage(Type.warn, content,map);
+	}
+
+	/**
+	 * 返回错误消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 错误消息
+	 */
+	public static AppMessage error(String content, Map<?,?> map) {
+		return new AppMessage(Type.error, content,map);
 	}
 
 	/**
