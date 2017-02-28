@@ -5,6 +5,8 @@
  */
 package com.easyshopping.service;
 
+import java.util.List;
+
 import com.easyshopping.entity.Inventory;
 
 /**
@@ -15,4 +17,5 @@ import com.easyshopping.entity.Inventory;
  */
 public interface InventoryService extends BaseService<Inventory, Long> {
 
+	List<Inventory> queryCount(String vendor_d,String product_id);
 }

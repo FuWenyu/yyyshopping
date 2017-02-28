@@ -5,6 +5,8 @@
  */
 package com.easyshopping.dao;
 
+import java.util.List;
+
 import com.easyshopping.entity.Inventory;
 
 /**
@@ -14,5 +16,7 @@ import com.easyshopping.entity.Inventory;
  * @version 1.0
  */
 public interface InventoryDao extends BaseDao<Inventory, Long> {
+	
+	List<Inventory> queryCount(String vendor_d,String product_id);
 	
 }

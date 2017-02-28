@@ -5,6 +5,8 @@
  */
 package com.easyshopping.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -29,5 +31,13 @@ public class InventoryServiceImpl extends BaseServiceImpl<Inventory, Long> imple
 	public void setBaseDao(InventoryDao inventoryDao) {
 		super.setBaseDao(inventoryDao);
 	}
+
+	@Override
+	public List<Inventory> queryCount(String vendor_d, String product_id) {
+		
+		return null;
+	}
+	
+	
 
 }
