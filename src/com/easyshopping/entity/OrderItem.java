@@ -69,6 +69,9 @@ public class OrderItem extends BaseEntity {
 
 	/** 商品 */
 	private Product product;
+	
+	/** 售货机 */
+	private Vendor vendor;
 
 	/** 订单 */
 	private Order order;
@@ -306,6 +309,26 @@ public class OrderItem extends BaseEntity {
 	 */
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	/**
+	 * 获取售货机
+	 * 
+	 * @return 商品
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	/**
+	 * 设置售货机
+	 * 
+	 * @param product
+	 *            商品
+	 */
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	/**

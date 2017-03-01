@@ -20,13 +20,16 @@ import com.easyshopping.entity.Order;
 import com.easyshopping.entity.Order.OrderStatus;
 import com.easyshopping.entity.Order.PaymentStatus;
 import com.easyshopping.entity.Order.ShippingStatus;
+import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Payment;
 import com.easyshopping.entity.PaymentMethod;
+import com.easyshopping.entity.Product;
 import com.easyshopping.entity.Receiver;
 import com.easyshopping.entity.Refunds;
 import com.easyshopping.entity.Returns;
 import com.easyshopping.entity.Shipping;
 import com.easyshopping.entity.ShippingMethod;
+import com.easyshopping.entity.Vendor;
 
 /**
  * Service - 订单
@@ -287,5 +290,40 @@ public interface OrderService extends BaseService<Order, Long> {
 	 *            操作员
 	 */
 	void returns(Order order, Returns returns, Admin operator);
+	
+	
+	/**
+	 * app生成订单
+	 * @param paymentMethod
+	 * @param memo
+	 * @param member
+	 * @param product
+	 * @param vendor
+	 * @param count
+	 * @return
+	 */
+	Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count);
 
+	/**
+	 * app创建订单
+	 * @param inventory
+	 * @param paymentMethod
+	 * @param memo
+	 * @param operator
+	 * @param userId
+	 * @param count
+	 * @return
+	 */
+	Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count);
+
+
+	/**
+	 * app订单取消
+	 * 
+	 * @param order
+	 *            订单
+	 * @param operator
+	 *            操作员
+	 */
+	void cancelApp(Order order, Admin operator);
 }

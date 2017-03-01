@@ -5,9 +5,7 @@
  */
 package com.easyshopping.controller.app;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easyshopping.AppMessage;
-import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.InventoryService;
 import com.easyshopping.service.VendingMachineService;
@@ -48,27 +45,6 @@ public class AppVendorController extends BaseController {
 		String latitude = (String)httpServletRequest.getAttribute("latitude");
 		List<Vendor> list = vendingMachineService.findList(longitude,latitude);
 		return new AppMessage().success("查询成功", list);
-	}
-	
-	/**
-	 * 购买
-	 */
-	@RequestMapping(value = "/buy")
-	@ResponseBody
-	public AppMessage buy(HttpServletRequest httpServletRequest) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		String vendor_id = httpServletRequest.getParameter("vendor_d");
-		String product_id = httpServletRequest.getParameter("product_id");
-		String count = httpServletRequest.getParameter("product_id");
-		List<Inventory> list = inventoryService.queryCount(vendor_id, product_id);
-		if(list==null||list.size()==0){
-			return AppMessage.warn("该售货机无此产品", map);
-		}
-		if(Integer.parseInt(count)>list.get(0).getNumber()){
-			return AppMessage.warn("库存不足", map);
-		}
-		
-		return AppMessage.success("查询成功", map);
 	}
 
 }

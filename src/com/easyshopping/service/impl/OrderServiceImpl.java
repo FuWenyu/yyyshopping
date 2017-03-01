@@ -39,6 +39,7 @@ import com.easyshopping.dao.RefundsDao;
 import com.easyshopping.dao.ReturnsDao;
 import com.easyshopping.dao.ShippingDao;
 import com.easyshopping.dao.SnDao;
+import com.easyshopping.dao.VendingMachineDao;
 import com.easyshopping.entity.Admin;
 import com.easyshopping.entity.Cart;
 import com.easyshopping.entity.CartItem;
@@ -53,6 +54,7 @@ import com.easyshopping.entity.Order;
 import com.easyshopping.entity.Order.OrderStatus;
 import com.easyshopping.entity.Order.PaymentStatus;
 import com.easyshopping.entity.Order.ShippingStatus;
+import com.easyshopping.entity.Order.TakeStatus;
 import com.easyshopping.entity.OrderItem;
 import com.easyshopping.entity.OrderLog;
 import com.easyshopping.entity.OrderLog.Type;
@@ -68,6 +70,7 @@ import com.easyshopping.entity.Shipping;
 import com.easyshopping.entity.ShippingItem;
 import com.easyshopping.entity.ShippingMethod;
 import com.easyshopping.entity.Sn;
+import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.OrderService;
 import com.easyshopping.service.StaticService;
 import com.easyshopping.util.SettingUtils;
@@ -113,6 +116,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	private StaticService staticService;
 	@Resource(name = "inventoryDaoImpl")
 	private InventoryDao inventoryDao;
+	@Resource(name = "vendingMachineDaoImpl")
+	private VendingMachineDao vendingMachineDao;
 
 	@Resource(name = "orderDaoImpl")
 	public void setBaseDao(OrderDao orderDao) {
@@ -789,16 +794,30 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 		super.delete(order);
 	}
 
-	public Order buy(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count) {
+	/**
+	 * app端订单
+	 * @param inventory
+	 * @param paymentMethod
+	 * @param memo
+	 * @param operator
+	 * @param userId
+	 * @param count
+	 * @return
+	 */
+	public Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count) {
 		Assert.notNull(paymentMethod);
 
 		Member member = new Member();
 		member = memberDao.find(Long.parseLong(userId));
 		Product product = new Product();
 		product = productDao.find(inventory.getProduct_id());
-		Order order = build(paymentMethod, memo,member,product,count);
+		Vendor vendor = new Vendor();
+		vendor = vendingMachineDao.find(inventory.getVendor_id());
+		Order order = buildApp(paymentMethod, memo,member,product,vendor,count);
 
 		order.setSn(snDao.generate(Sn.Type.order));
+		order.setTakeCode(snDao.generate(Sn.Type.order));
+		order.setTakeStatus(TakeStatus.untaked);
 		if (paymentMethod.getMethod() == PaymentMethod.Method.online) {
 			order.setLockExpire(DateUtils.addSeconds(new Date(), 20));
 			order.setOperator(operator);
@@ -835,7 +854,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	}
 	
 	@Transactional(readOnly = true)
-	public Order build(PaymentMethod paymentMethod,  String memo,Member member,Product product,int count) {
+	public Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count) {
 		Order order = new Order();
 		order.setFee(new BigDecimal(0));
 		order.setCouponDiscount(new BigDecimal(0));
@@ -860,24 +879,49 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 			orderItem.setShippedQuantity(0);
 			orderItem.setReturnQuantity(0);
 			orderItem.setProduct(product);
+			orderItem.setVendor(vendor);
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 		}
 
-		if (order.getAmountPayable().compareTo(new BigDecimal(0)) == 0) {
-			order.setOrderStatus(OrderStatus.confirmed);
-			order.setPaymentStatus(PaymentStatus.paid);
-		} else if (order.getAmountPayable().compareTo(new BigDecimal(0)) > 0 && order.getAmountPaid().compareTo(new BigDecimal(0)) > 0) {
-			order.setOrderStatus(OrderStatus.confirmed);
-			order.setPaymentStatus(PaymentStatus.partialPayment);
-		} else {
-			order.setOrderStatus(OrderStatus.unconfirmed);
-			order.setPaymentStatus(PaymentStatus.unpaid);
+		order.setOrderStatus(OrderStatus.confirmed);
+		order.setPaymentStatus(PaymentStatus.paid);
+
+		/*if (paymentMethod != null && paymentMethod.getTimeout() != null && order.getPaymentStatus() == PaymentStatus.unpaid) {
+			order.setExpire(DateUtils.addMinutes(new Date(), paymentMethod.getTimeout()));
+		}*/
+		return order;
+	}
+	
+	
+	public void cancelApp(Order order,Admin operator) {
+		Assert.notNull(order);
+
+		if (order.getIsAllocatedStock()) {
+			for (OrderItem orderItem : order.getOrderItems()) {
+				if (orderItem != null) {
+					Product product = orderItem.getProduct();
+					Vendor vendor = orderItem.getVendor();
+					List<Inventory> list = inventoryDao.queryCount(vendor.getId().toString(), product.getId().toString());
+					Inventory inventory = list.get(0);
+					inventoryDao.lock(inventory, LockModeType.PESSIMISTIC_WRITE);
+					if (inventory != null) {
+						inventory.setNumber(inventory.getNumber() + orderItem.getQuantity());
+						inventoryDao.merge(inventory);
+						inventoryDao.flush();
+					}
+				}
+			}
+			order.setIsAllocatedStock(false);
 		}
 
-		if (paymentMethod != null && paymentMethod.getTimeout() != null && order.getPaymentStatus() == PaymentStatus.unpaid) {
-			order.setExpire(DateUtils.addMinutes(new Date(), paymentMethod.getTimeout()));
-		}
-		return order;
+		order.setOrderStatus(OrderStatus.cancelled);
+		order.setExpire(null);
+		orderDao.merge(order);
+
+		OrderLog orderLog = new OrderLog();
+		orderLog.setType(Type.cancel);
+		orderLog.setOrder(order);
+		orderLogDao.persist(orderLog);
 	}
 }

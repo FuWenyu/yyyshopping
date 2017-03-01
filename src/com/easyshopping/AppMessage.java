@@ -56,6 +56,19 @@ public class AppMessage {
 	 * @param content
 	 *            内容
 	 */
+	public AppMessage(Type type, String content) {
+		this.type = type;
+		this.content = content;
+	}
+	
+	/**
+	 * 初始化一个新创建的 Message 对象
+	 * 
+	 * @param type
+	 *            类型
+	 * @param content
+	 *            内容
+	 */
 	public AppMessage(Type type, String content,List<?> list) {
 		this.type = type;
 		this.content = content;
@@ -76,6 +89,44 @@ public class AppMessage {
 		this.map = map;
 	}
 
+	/**
+	 * 返回成功消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 成功消息
+	 */
+	public static AppMessage success(String content) {
+		return new AppMessage(Type.success, content);
+	}
+
+	/**
+	 * 返回警告消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 警告消息
+	 */
+	public static AppMessage warn(String content) {
+		return new AppMessage(Type.warn, content);
+	}
+
+	/**
+	 * 返回错误消息
+	 * 
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 错误消息
+	 */
+	public static AppMessage error(String content) {
+		return new AppMessage(Type.error, content);
+	}
 
 	/**
 	 * 返回成功消息
