@@ -14,6 +14,7 @@ import com.easyshopping.Pageable;
 import com.easyshopping.entity.BaseEntity.Save;
 import com.easyshopping.entity.Inventory;
 import com.easyshopping.service.InventoryService;
+import com.easyshopping.service.ProductService;
 import com.easyshopping.service.VendingMachineService;
 
 /**
@@ -31,6 +32,9 @@ public class InventoryController extends BaseController {
 	
 	@Resource(name = "vendingMachineServiceImpl")
 	private VendingMachineService vendingMachineService;
+	
+	@Resource(name = "productServiceImpl")
+	private ProductService productService;
 
 	/**
 	 * 添加
@@ -38,6 +42,9 @@ public class InventoryController extends BaseController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap model) {
 		model.addAttribute("vendorList", vendingMachineService.findAll());
+		Pageable pageable = new Pageable();
+		pageable.setPageSize(5);
+		model.addAttribute("page", productService.findPage(pageable));
 		return "/admin/inventory/add";
 	}
 

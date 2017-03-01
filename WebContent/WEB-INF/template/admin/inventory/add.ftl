@@ -11,6 +11,7 @@
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.lSelect.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/input.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/list.js"></script>
 <script type="text/javascript" type="text/javascript">
 $().ready(function() {
 
@@ -131,6 +132,101 @@ $().ready(function() {
 			}
 		});
 	});
+	
+	var $sn = $("#sn");
+	// 更多选项
+	$sn.click(function() {
+		$.dialog({
+			title: "商品列表",
+			[@compress single_line = true]
+				content: '
+					<table id="productListTable" class="list">
+						<tr>
+							<th class="check">
+								<input type="checkbox" id="selectAll" />
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="vendor_code">编号</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="position">名称</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="address">商品分类</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="shophours">销售价</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="name">成本价</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="discount">是否上架</a>
+							</th>
+							<th>
+								<a href="javascript:;" class="sort" name="privilege">创建日期</a>
+							</th>
+						</tr>
+						[#list page.content as product]
+							<tr>
+								<td>
+									<input type="checkbox" name="ids" value="${product.id}" />
+								</td>
+								<td>
+									${product.sn}
+								</td>
+								<td>
+									${product.name}
+								</td>
+								<td>
+									${product.productCategory}
+								</td>
+								<td>
+									${product.price}
+								</td>
+								<td>
+									${product.cost}
+								</td>
+								<td>
+									${product.isMarketable}
+								</td>
+								<td>
+									${product.createDate}
+								</td>
+							</tr>
+						[/#list]
+					</table>
+					[@pagination pageNumber = page.pageNumber totalPages = page.totalPages]
+						[#include "/admin/include/pagination.ftl"]
+					[/@pagination]
+				',
+			[/@compress]
+			width: 1000,
+			modal: true,
+			ok: "${message("admin.dialog.ok")}",
+			cancel: "${message("admin.dialog.cancel")}",
+			onOk: function() {
+				var checkNum = 0;
+				$("#productListTable :input[checked]").each(function() {
+					//var $this = $(this);
+					//console.info(this);
+					checkNum += 1;
+					//$("#" + $this.attr("name")).val($this.val());
+				});
+				if(checkNum!=1){
+					alert("请选择一项");
+				}else{
+					$("#productListTable :input[checked]").each(function() {
+						//console.info($($($(this).parent()[0]).next()[0]).text());
+						$("#product_id").val(this.value);
+						$("#sn").val($($($(this).parent()[0]).next()[0]).text());
+						console.info($($($(this).parent()[0]).next()[0]).next()[0]);
+						$("#product_name").val($($($($(this).parent()[0]).next()[0]).next()[0]).text());
+					});
+				}
+			}
+		});
+	});
 
 });
 </script>
@@ -141,6 +237,7 @@ $().ready(function() {
 	</div>
 	<form id="inputForm" action="save.jhtml" method="post">
 		<input type="hidden" id="vendor_id" name="vendor_id" />
+		<input type="hidden" id="product_id" name="product_id" />
 		<table class="input">
 			<!-- <tr>
 				<th>
@@ -166,20 +263,20 @@ $().ready(function() {
 					<input type="text" id="vendor_name" name="vendor_name" class="text" maxlength="200" readonly />
 				</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<th>
 					<span class="requiredField">*</span>商品ID:
 				</th>
 				<td>
 					<input type="text" name="product_id" class="text" maxlength="200" />
 				</td>
-			</tr>
+			</tr> -->
 			<tr>
 				<th>
 					<span class="requiredField">*</span>商品编码:
 				</th>
 				<td>
-					<input type="text" id="sn" name="sn" class="text" />
+					<input type="text" id="sn" name="sn" class="text" readonly />(点击选择)
 				</td>
 			</tr>
 			<tr>
@@ -187,7 +284,7 @@ $().ready(function() {
 					<span class="requiredField">*</span>商品名称:
 				</th>
 				<td>
-					<input type="text" name="product_name" class="text" maxlength="200" />
+					<input type="text" id="product_name" name="product_name" class="text" maxlength="200" readonly />
 				</td>
 			</tr>
 			<tr>
