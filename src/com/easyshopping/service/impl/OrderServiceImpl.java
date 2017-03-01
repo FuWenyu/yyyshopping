@@ -13,6 +13,12 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.LockModeType;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
 import com.easyshopping.Filter;
 import com.easyshopping.Page;
 import com.easyshopping.Pageable;
@@ -21,6 +27,7 @@ import com.easyshopping.Setting.StockAllocationTime;
 import com.easyshopping.dao.CartDao;
 import com.easyshopping.dao.CouponCodeDao;
 import com.easyshopping.dao.DepositDao;
+import com.easyshopping.dao.InventoryDao;
 import com.easyshopping.dao.MemberDao;
 import com.easyshopping.dao.MemberRankDao;
 import com.easyshopping.dao.OrderDao;
@@ -39,6 +46,7 @@ import com.easyshopping.entity.Coupon;
 import com.easyshopping.entity.CouponCode;
 import com.easyshopping.entity.Deposit;
 import com.easyshopping.entity.GiftItem;
+import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Member;
 import com.easyshopping.entity.MemberRank;
 import com.easyshopping.entity.Order;
@@ -63,12 +71,6 @@ import com.easyshopping.entity.Sn;
 import com.easyshopping.service.OrderService;
 import com.easyshopping.service.StaticService;
 import com.easyshopping.util.SettingUtils;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 /**
  * Service - 订单
@@ -109,6 +111,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	private ReturnsDao returnsDao;
 	@Resource(name = "staticServiceImpl")
 	private StaticService staticService;
+	@Resource(name = "inventoryDaoImpl")
+	private InventoryDao inventoryDao;
 
 	@Resource(name = "orderDaoImpl")
 	public void setBaseDao(OrderDao orderDao) {
@@ -785,4 +789,95 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 		super.delete(order);
 	}
 
+	public Order buy(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count) {
+		Assert.notNull(paymentMethod);
+
+		Member member = new Member();
+		member = memberDao.find(Long.parseLong(userId));
+		Product product = new Product();
+		product = productDao.find(inventory.getProduct_id());
+		Order order = build(paymentMethod, memo,member,product,count);
+
+		order.setSn(snDao.generate(Sn.Type.order));
+		if (paymentMethod.getMethod() == PaymentMethod.Method.online) {
+			order.setLockExpire(DateUtils.addSeconds(new Date(), 20));
+			order.setOperator(operator);
+		}
+
+		Setting setting = SettingUtils.get();
+		if (setting.getStockAllocationTime() == StockAllocationTime.order || (setting.getStockAllocationTime() == StockAllocationTime.payment && (order.getPaymentStatus() == PaymentStatus.partialPayment || order.getPaymentStatus() == PaymentStatus.paid))) {
+			order.setIsAllocatedStock(true);
+		} else {
+			order.setIsAllocatedStock(false);
+		}
+
+		orderDao.persist(order);
+
+		OrderLog orderLog = new OrderLog();
+		orderLog.setType(Type.create);
+		orderLog.setOperator(operator != null ? operator.getUsername() : null);
+		orderLog.setOrder(order);
+		orderLogDao.persist(orderLog);
+
+		if (setting.getStockAllocationTime() == StockAllocationTime.order || (setting.getStockAllocationTime() == StockAllocationTime.payment && (order.getPaymentStatus() == PaymentStatus.partialPayment || order.getPaymentStatus() == PaymentStatus.paid))) {
+			for (OrderItem orderItem : order.getOrderItems()) {
+				if (orderItem != null) {
+					inventoryDao.lock(inventory, LockModeType.PESSIMISTIC_WRITE);
+					if (inventory != null && inventory.getNumber() != 0) {
+						inventory.setNumber(inventory.getNumber() - orderItem.getQuantity());
+						inventoryDao.merge(inventory);
+						inventoryDao.flush();
+					}
+				}
+			}
+		}
+		return order;
+	}
+	
+	@Transactional(readOnly = true)
+	public Order build(PaymentMethod paymentMethod,  String memo,Member member,Product product,int count) {
+		Order order = new Order();
+		order.setFee(new BigDecimal(0));
+		order.setCouponDiscount(new BigDecimal(0));
+		order.setOffsetAmount(new BigDecimal(0));
+		order.setPoint((long)0);
+		order.setMemo(memo);
+		order.setMember(member);
+		order.setPaymentMethod(paymentMethod);
+		order.setFreight(new BigDecimal(0));
+
+		List<OrderItem> orderItems = order.getOrderItems();
+		if (product != null) {
+			OrderItem orderItem = new OrderItem();
+			orderItem.setSn(product.getSn());
+			orderItem.setName(product.getName());
+			orderItem.setFullName(product.getFullName());
+			orderItem.setPrice(product.getPrice());
+			orderItem.setWeight(product.getWeight());
+			orderItem.setThumbnail(product.getThumbnail());
+			orderItem.setIsGift(false);
+			orderItem.setQuantity(count);
+			orderItem.setShippedQuantity(0);
+			orderItem.setReturnQuantity(0);
+			orderItem.setProduct(product);
+			orderItem.setOrder(order);
+			orderItems.add(orderItem);
+		}
+
+		if (order.getAmountPayable().compareTo(new BigDecimal(0)) == 0) {
+			order.setOrderStatus(OrderStatus.confirmed);
+			order.setPaymentStatus(PaymentStatus.paid);
+		} else if (order.getAmountPayable().compareTo(new BigDecimal(0)) > 0 && order.getAmountPaid().compareTo(new BigDecimal(0)) > 0) {
+			order.setOrderStatus(OrderStatus.confirmed);
+			order.setPaymentStatus(PaymentStatus.partialPayment);
+		} else {
+			order.setOrderStatus(OrderStatus.unconfirmed);
+			order.setPaymentStatus(PaymentStatus.unpaid);
+		}
+
+		if (paymentMethod != null && paymentMethod.getTimeout() != null && order.getPaymentStatus() == PaymentStatus.unpaid) {
+			order.setExpire(DateUtils.addMinutes(new Date(), paymentMethod.getTimeout()));
+		}
+		return order;
+	}
 }
