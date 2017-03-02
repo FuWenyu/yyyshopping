@@ -302,7 +302,7 @@ public interface OrderService extends BaseService<Order, Long> {
 	 * @param count
 	 * @return
 	 */
-	Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count);
+	Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count,BigDecimal amount);
 
 	/**
 	 * app创建订单
@@ -314,7 +314,7 @@ public interface OrderService extends BaseService<Order, Long> {
 	 * @param count
 	 * @return
 	 */
-	Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count);
+	Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount);
 
 
 	/**

@@ -5,6 +5,7 @@
  */
 package com.easyshopping.controller.app;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easyshopping.AppMessage;
 import com.easyshopping.entity.Inventory;
+import com.easyshopping.entity.Member;
 import com.easyshopping.entity.Order;
-import com.easyshopping.entity.Order.TakeStatus;
-import com.easyshopping.entity.PaymentMethod;
 import com.easyshopping.entity.Order.OrderStatus;
 import com.easyshopping.entity.Order.PaymentStatus;
+import com.easyshopping.entity.Order.TakeStatus;
+import com.easyshopping.entity.PaymentMethod;
 import com.easyshopping.service.InventoryService;
 import com.easyshopping.service.MemberService;
 import com.easyshopping.service.OrderService;
@@ -55,10 +57,11 @@ public class AppOrderController extends BaseController {
 	@ResponseBody
 	public AppMessage create(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		String vendor_id = request.getParameter("vendor_d");
+		String vendor_id = request.getParameter("vendor_id");
 		String product_id = request.getParameter("product_id");
-		String count = request.getParameter("product_id");
-		List<Inventory> list = inventoryService.queryCount(vendor_id, product_id);
+		String count = request.getParameter("count");
+		BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+		List<Inventory> list = inventoryService.queryCount(Long.parseLong(vendor_id), Long.parseLong(product_id));
 		if(list==null||list.size()==0){
 			return AppMessage.warn("该售货机无此产品", map);
 		}
@@ -69,7 +72,7 @@ public class AppOrderController extends BaseController {
 		if(Integer.parseInt(count)>list.get(0).getNumber()){
 			return AppMessage.warn("库存不足", map);
 		}
-		Order order = orderService.createApp(list.get(0),paymentMethod,request.getParameter("memo"), null, request.getParameter("userId"),Integer.parseInt(count));
+		Order order = orderService.createApp(list.get(0),paymentMethod,request.getParameter("memo"), null, request.getParameter("userId"),Integer.parseInt(count),amount);
 		map.put("sn", order.getSn());
 		map.put("takeCode", order.getTakeCode());
 		return AppMessage.success("下单成功", map);
@@ -80,9 +83,10 @@ public class AppOrderController extends BaseController {
 	 */
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
 	public @ResponseBody
-	AppMessage cancel(String sn) {
-		Order order = orderService.findBySn(sn);
-		if (order != null && memberService.getCurrent().equals(order.getMember()) && !order.isExpired() && order.getOrderStatus() == OrderStatus.confirmed && order.getPaymentStatus() == PaymentStatus.paid&&order.getTakeStatus()==TakeStatus.untaked) {
+	AppMessage cancel(HttpServletRequest request) {
+		Order order = orderService.findBySn(request.getParameter("sn"));
+		Member member = memberService.find(Long.parseLong(request.getParameter("userId")));
+		if (order != null && member.equals(order.getMember()) && !order.isExpired() && order.getOrderStatus() == OrderStatus.confirmed && order.getPaymentStatus() == PaymentStatus.paid&&order.getTakeStatus()==TakeStatus.untaked) {
 			if (order.isLocked(null)) {
 				return AppMessage.warn("订单已锁定");
 			}

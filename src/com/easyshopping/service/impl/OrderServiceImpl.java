@@ -804,16 +804,16 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	 * @param count
 	 * @return
 	 */
-	public Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count) {
+	public Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount) {
 		Assert.notNull(paymentMethod);
 
-		Member member = new Member();
+		Member member;
 		member = memberDao.find(Long.parseLong(userId));
-		Product product = new Product();
+		Product product;
 		product = productDao.find(inventory.getProduct_id());
 		Vendor vendor = new Vendor();
 		vendor = vendingMachineDao.find(inventory.getVendor_id());
-		Order order = buildApp(paymentMethod, memo,member,product,vendor,count);
+		Order order = buildApp(paymentMethod, memo,member,product,vendor,count,amount);
 
 		order.setSn(snDao.generate(Sn.Type.order));
 		order.setTakeCode(snDao.generate(Sn.Type.order));
@@ -854,16 +854,24 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	}
 	
 	@Transactional(readOnly = true)
-	public Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count) {
+	public Order buildApp(PaymentMethod paymentMethod,  String memo,Member member,Product product,Vendor vendor,int count,BigDecimal amount) {
 		Order order = new Order();
-		order.setFee(new BigDecimal(0));
-		order.setCouponDiscount(new BigDecimal(0));
-		order.setOffsetAmount(new BigDecimal(0));
+		order.setAddress(vendor.getAddress());
+		order.setAmountPaid(amount);
+		order.setConsignee(member.getName());
+		order.setPhone(member.getMobile());
+		order.setCouponDiscount(BigDecimal.ZERO);
+		order.setCreateDate(new Date());
+		order.setIsInvoice(false);
+		order.setFee(BigDecimal.ZERO);
+		order.setOffsetAmount(BigDecimal.ZERO);
 		order.setPoint((long)0);
 		order.setMemo(memo);
 		order.setMember(member);
 		order.setPaymentMethod(paymentMethod);
-		order.setFreight(new BigDecimal(0));
+		order.setFreight(BigDecimal.ZERO);
+		order.setPromotionDiscount(BigDecimal.ZERO);
+		order.setTax(BigDecimal.ZERO);
 
 		List<OrderItem> orderItems = order.getOrderItems();
 		if (product != null) {
@@ -902,7 +910,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 				if (orderItem != null) {
 					Product product = orderItem.getProduct();
 					Vendor vendor = orderItem.getVendor();
-					List<Inventory> list = inventoryDao.queryCount(vendor.getId().toString(), product.getId().toString());
+					List<Inventory> list = inventoryDao.queryCount(vendor.getId(), product.getId());
 					Inventory inventory = list.get(0);
 					inventoryDao.lock(inventory, LockModeType.PESSIMISTIC_WRITE);
 					if (inventory != null) {

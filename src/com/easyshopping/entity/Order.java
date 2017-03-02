@@ -550,7 +550,7 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 地区名称
 	 */
-	@Column(nullable = false)
+	@Column
 	public String getAreaName() {
 		return areaName;
 	}
@@ -592,9 +592,8 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 邮编
 	 */
-	@NotEmpty
 	@Length(max = 200)
-	@Column(nullable = false)
+	@Column
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -837,7 +836,6 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 地区
 	 */
-	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Area getArea() {
 		return area;
@@ -879,7 +877,6 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 配送方式
 	 */
-	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	public ShippingMethod getShippingMethod() {
 		return shippingMethod;
