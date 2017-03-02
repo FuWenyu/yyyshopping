@@ -17,6 +17,6 @@ import com.easyshopping.entity.Inventory;
  */
 public interface InventoryDao extends BaseDao<Inventory, Long> {
 	
-	List<Inventory> queryCount(String vendor_id,String product_id);
+	List<Inventory> queryCount(Long vendor_id,Long product_id);
 	
 }

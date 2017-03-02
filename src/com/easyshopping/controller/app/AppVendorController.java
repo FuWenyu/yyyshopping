@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easyshopping.AppMessage;
@@ -20,7 +21,7 @@ import com.easyshopping.service.InventoryService;
 import com.easyshopping.service.VendingMachineService;
 
 /**
- * Controller - 商品分类-APP
+ * Controller - 售货机查询-APP
  * 
  * 
  * @version 1.0
@@ -38,7 +39,7 @@ public class AppVendorController extends BaseController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping(value = "/list")
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
 	public AppMessage list(HttpServletRequest httpServletRequest) {
 		String longitude = (String)httpServletRequest.getAttribute("longitude");

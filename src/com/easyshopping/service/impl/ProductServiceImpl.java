@@ -30,6 +30,7 @@ import com.easyshopping.entity.Product.OrderType;
 import com.easyshopping.entity.ProductCategory;
 import com.easyshopping.entity.Promotion;
 import com.easyshopping.entity.Tag;
+import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.ProductService;
 import com.easyshopping.service.StaticService;
 
@@ -111,6 +112,11 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
 		return productDao.findList(productCategory, beginDate, endDate, first, count);
 	}
 
+	@Transactional(readOnly = true)
+	public List<Product> findList(ProductCategory productCategory, Integer first, Integer count) {
+		return productDao.findList(productCategory, first, count);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<Object[]> findSalesList(Date beginDate, Date endDate, Integer count) {
 		return productDao.findSalesList(beginDate, endDate, count);
@@ -251,6 +257,11 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
 			staticService.delete(product);
 		}
 		super.delete(product);
+	}
+
+	@Override
+	public List<Object[]> productDetail(ProductCategory productCategory, Vendor vendor) {
+		return null;
 	}
 
 }

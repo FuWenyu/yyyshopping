@@ -55,8 +55,8 @@ public class AppOrderController extends BaseController {
 	@ResponseBody
 	public AppMessage create(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		String vendor_id = request.getParameter("vendor_d");
-		String product_id = request.getParameter("product_id");
+		Long vendor_id = Long.valueOf(request.getParameter("vendor_d"));
+		Long product_id = Long.valueOf(request.getParameter("product_id"));
 		String count = request.getParameter("product_id");
 		List<Inventory> list = inventoryService.queryCount(vendor_id, product_id);
 		if(list==null||list.size()==0){

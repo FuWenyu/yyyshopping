@@ -33,7 +33,7 @@ public class InventoryServiceImpl extends BaseServiceImpl<Inventory, Long> imple
 	}
 
 	@Override
-	public List<Inventory> queryCount(String vendor_id, String product_id) {
+	public List<Inventory> queryCount(Long vendor_id, Long product_id) {
 		
 		return inventoryDao.queryCount(vendor_id, product_id);
 	}

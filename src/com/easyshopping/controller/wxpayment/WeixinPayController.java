@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.easyshopping.wxpayment.GetWxOrderno;
 import com.easyshopping.wxpayment.RequestHandler;
 import com.easyshopping.wxpayment.Sha1Util;
+import com.easyshopping.wxpayment.TenpayUtil;
 import com.easyshopping.wxpayment.WeixinPayConstants;
 
 import net.sf.json.JSONObject;
@@ -24,16 +25,16 @@ import net.sf.json.JSONObject;
 *//**  
  * @author 付文宇
  * @version ：2016-5-9 上午11:46:48  
- *//*  
+ *//*
 @Controller("weixinPayController")  
 @RequestMapping("/api/weixin")  
-public class WeixinPayController {  
-@Resource(name = "memberServiceImpl")  
-private MemberService memberService;  
-@Resource(name = "orderServiceImpl")  
+public class WeixinPayController {
+@Resource(name = "memberServiceImpl")
+private MemberService memberService;
+@Resource(name = "orderServiceImpl")
 private RecordsConsumptionService  recordsConsumptionService;  
 //商户相关资料   
-private static String appid = WeixinPayConstants.appid;  
+private static String appid = WeixinPayConstants.appid;
 private static String appsecret = WeixinPayConstants.appsecret;  
 private static String partner = WeixinPayConstants.partner;  
 private static String partnerkey = WeixinPayConstants.partnerkey;  
@@ -275,5 +276,4 @@ private static String partnerkey = WeixinPayConstants.partnerkey;
     public static String setXml(String return_code,String return_msg){  
         return "<xml><return_code><![CDATA["+return_code+"]]></return_code><return_msg><![CDATA["+return_msg+"]]></return_msg></xml>";  
 }  
-}  
-*/
+}  */

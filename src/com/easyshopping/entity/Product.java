@@ -572,6 +572,7 @@ public class Product extends BaseEntity {
 	 * 
 	 * @return 库存
 	 */
+	@JsonProperty
 	@Field(store = Store.YES, index = Index.NO)
 	@Min(0)
 	public Integer getStock() {
@@ -766,6 +767,7 @@ public class Product extends BaseEntity {
 	 * 
 	 * @return 备注
 	 */
+	@JsonProperty
 	@Length(max = 200)
 	public String getMemo() {
 		return memo;

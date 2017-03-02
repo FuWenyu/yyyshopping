@@ -251,5 +251,13 @@ public class AppMessage {
 	public void setList(List<?> list) {
 		this.list = list;
 	}
+
+	public Map<?, ?> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<?, ?> map) {
+		this.map = map;
+	}
 	
 }
