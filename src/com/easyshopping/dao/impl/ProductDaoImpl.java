@@ -40,6 +40,7 @@ import com.easyshopping.dao.SnDao;
 import com.easyshopping.entity.Attribute;
 import com.easyshopping.entity.Brand;
 import com.easyshopping.entity.Goods;
+import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Member;
 import com.easyshopping.entity.Order.OrderStatus;
 import com.easyshopping.entity.Order.PaymentStatus;
@@ -51,6 +52,7 @@ import com.easyshopping.entity.Promotion;
 import com.easyshopping.entity.Sn.Type;
 import com.easyshopping.entity.SpecificationValue;
 import com.easyshopping.entity.Tag;
+import com.easyshopping.entity.Vendor;
 import com.easyshopping.util.SettingUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -243,6 +245,21 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements Produc
 		return super.findList(criteriaQuery, first, count, null, null);
 	}
 
+	public List<Product> findList(ProductCategory productCategory,Integer first, Integer count) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+		Root<Product> root = criteriaQuery.from(Product.class);
+		criteriaQuery.select(root);
+		Predicate restrictions = criteriaBuilder.conjunction();
+		restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.equal(root.get("isMarketable"), true));
+		if (productCategory != null) {
+			restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.or(criteriaBuilder.equal(root.get("productCategory"), productCategory), criteriaBuilder.like(root.get("productCategory").<String> get("treePath"), "%" + ProductCategory.TREE_PATH_SEPARATOR + productCategory.getId() + ProductCategory.TREE_PATH_SEPARATOR + "%")));
+		}
+		criteriaQuery.where(restrictions);
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("isTop")));
+		return super.findList(criteriaQuery, first, count, null, null);
+	}
+	
 	public List<Product> findList(Goods goods, Set<Product> excludes) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
@@ -283,7 +300,6 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements Produc
 		}
 		return query.getResultList();
 	}
-
 	public Page<Product> findPage(ProductCategory productCategory, Brand brand, Promotion promotion, List<Tag> tags, Map<Attribute, String> attributeValue, BigDecimal startPrice, BigDecimal endPrice, Boolean isMarketable, Boolean isList, Boolean isTop, Boolean isGift, Boolean isOutOfStock, Boolean isStockAlert, OrderType orderType, Pageable pageable) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
@@ -541,5 +557,6 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements Produc
 		}
 		product.setFullName(fullName.toString());
 	}
+
 
 }

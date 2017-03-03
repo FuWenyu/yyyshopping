@@ -121,6 +121,18 @@ public interface ProductDao extends BaseDao<Product, Long> {
 	 * @return 已上架商品
 	 */
 	List<Product> findList(ProductCategory productCategory, Date beginDate, Date endDate, Integer first, Integer count);
+	/**
+	 * 查找已上架商品
+	 * 
+	 * @param productCategory
+	 *            商品分类
+	 * @param first
+	 *            起始记录
+	 * @param count
+	 *            数量
+	 * @return 已上架商品
+	 */
+    List<Product> findList(ProductCategory productCategory,Integer first, Integer count);
 
 	/**
 	 * 查找商品

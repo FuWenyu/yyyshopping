@@ -18,6 +18,7 @@
 				/admin/common/captcha.jhtml = anon
 
 				/admin/vending_machine/** = perms["admin:vendingMachine"]
+				/admin/inventory/** = perms["admin:inventory"]
 				/admin/product/** = perms["admin:product"]
 				/admin/product_category/** = perms["admin:productCategory"]
 				/admin/parameter_group/** = perms["admin:parameterGroup"]

@@ -22,6 +22,7 @@ import com.easyshopping.entity.Product.OrderType;
 import com.easyshopping.entity.ProductCategory;
 import com.easyshopping.entity.Promotion;
 import com.easyshopping.entity.Tag;
+import com.easyshopping.entity.Vendor;
 
 /**
  * Service - 商品
@@ -172,6 +173,31 @@ public interface ProductService extends BaseService<Product, Long> {
 	 * @return 已上架商品
 	 */
 	List<Product> findList(ProductCategory productCategory, Date beginDate, Date endDate, Integer first, Integer count);
+	/**
+	 * 查找已上架商品
+	 * 
+	 * @param productCategory
+	 *            商品分类
+	 * @param first
+	 *            起始记录
+	 * @param count
+	 *            数量
+	 * @return 已上架商品
+	 */
+	List<Product> findList(ProductCategory productCategory, Integer first, Integer count);
+	
+	/**
+	 * 查找已上架商品详情
+	 * 
+	 * @param productCategory
+	 *            商品分类
+	 * @param first
+	 *            起始记录
+	 * @param count
+	 *            数量
+	 * @return 已上架商品
+	 */
+	List<Object[]> productDetail(ProductCategory productCategory, Vendor vendor);
 
 	/**
 	 * 查找商品销售信息
