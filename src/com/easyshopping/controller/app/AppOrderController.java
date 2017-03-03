@@ -57,6 +57,7 @@ public class AppOrderController extends BaseController {
 	@ResponseBody
 	public AppMessage create(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<String,Object>();
+
 		String vendor_id = request.getParameter("vendor_id");
 		String product_id = request.getParameter("product_id");
 		String count = request.getParameter("count");

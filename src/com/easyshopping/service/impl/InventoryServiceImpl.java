@@ -32,7 +32,6 @@ public class InventoryServiceImpl extends BaseServiceImpl<Inventory, Long> imple
 		super.setBaseDao(inventoryDao);
 	}
 
-	@Override
 	public List<Inventory> queryCount(long vendor_id, long product_id) {
 		
 		return inventoryDao.queryCount(vendor_id, product_id);

@@ -18,4 +18,5 @@ import com.easyshopping.entity.Inventory;
 public interface InventoryService extends BaseService<Inventory, Long> {
 
 	List<Inventory> queryCount(long vendor_id,long product_id);
+
 }
