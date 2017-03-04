@@ -17,8 +17,10 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.easyshopping.DatagridDTO;
 import com.easyshopping.FileInfo.FileType;
 import com.easyshopping.Message;
+import com.easyshopping.Page;
 import com.easyshopping.Pageable;
 import com.easyshopping.Setting;
 import com.easyshopping.entity.Attribute;
@@ -547,6 +549,22 @@ public class ProductController extends BaseController {
 		Setting setting = SettingUtils.get();
 		Double defaultPointScale = setting.getDefaultPointScale();
 		return price.multiply(new BigDecimal(defaultPointScale.toString())).longValue();
+	}
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping(value = "/productList", method = RequestMethod.GET)
+	@ResponseBody
+	public DatagridDTO getProductlist(String searchText,int page, int rows) {
+		Pageable pageable = new Pageable();
+		pageable.setPageNumber(page);
+		pageable.setPageSize(rows);
+		DatagridDTO dgDto = new DatagridDTO();
+		Page<Product> pageInfo = productService.findPage(pageable);
+		dgDto.setRows(pageInfo.getContent());
+		dgDto.setTotal(pageInfo.getTotal());
+		return dgDto;
 	}
 
 }

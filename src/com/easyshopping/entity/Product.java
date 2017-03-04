@@ -462,6 +462,7 @@ public class Product extends BaseEntity {
 	 * 
 	 * @return 成本价
 	 */
+	@JsonProperty
 	@Min(0)
 	@Digits(integer = 12, fraction = 3)
 	@Column(precision = 21, scale = 6)
@@ -657,6 +658,7 @@ public class Product extends BaseEntity {
 	 * 
 	 * @return 是否上架
 	 */
+	@JsonProperty
 	@Field(store = Store.YES, index = Index.UN_TOKENIZED)
 	@NotNull
 	@Column(nullable = false)
@@ -1544,6 +1546,7 @@ public class Product extends BaseEntity {
 	 * 
 	 * @return 商品分类
 	 */
+	@JsonProperty
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
