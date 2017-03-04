@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <easyshopping>
+	<setting name="vcodeExpiryTime" value="5" />
 	<setting name="siteName" value="EASY SHOPPING商城" />
 	<setting name="siteUrl" value="http://127.0.0.1:8080/easy-shopping/" />
 	<setting name="logo" value="/upload/image/logo.gif" />

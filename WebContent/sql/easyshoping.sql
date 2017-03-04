@@ -4022,6 +4022,8 @@ CREATE TABLE `xx_member` (
   `zip_code` varchar(255) DEFAULT NULL,
   `area` bigint(20) DEFAULT NULL,
   `member_rank` bigint(20) DEFAULT NULL,
+  `v_code` varchar(6) DEFAULT NULL,
+  `v_code_create` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `FK92D398B939A0DADE` (`area`),

@@ -17,7 +17,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -216,6 +215,52 @@ public class Member extends BaseEntity {
 
 	/** 发送的消息 */
 	private Set<Message> outMessages = new HashSet<Message>();
+	
+	/** 验证码 */
+	private String vCode;
+	
+	/** 验证码创建时间 */
+	private Date vCodeCreate;
+	
+	/**
+	 * 获取验证码
+	 * 
+	 * @return 验证码
+	 */
+	@Column(length = 6)
+	public String getvCode() {
+		return vCode;
+	}
+
+	/**
+	 * 设置验证码
+	 * 
+	 * @param username
+	 *            验证码
+	 */
+	public void setvCode(String vCode) {
+		this.vCode = vCode;
+	}
+
+	/**
+	 * 获取验证码创建时间
+	 * 
+	 * @return 验证码创建时间
+	 */
+	@Column
+	public Date getvCodeCreate() {
+		return vCodeCreate;
+	}
+
+	/**
+	 * 设置验证码创建时间
+	 * 
+	 * @param username
+	 *            验证码创建时间
+	 */
+	public void setvCodeCreate(Date vCodeCreate) {
+		this.vCodeCreate = vCodeCreate;
+	}
 
 	/**
 	 * 获取用户名

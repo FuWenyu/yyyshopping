@@ -273,6 +273,9 @@ public class Setting implements Serializable {
 
 	/** 验证码类型 */
 	private CaptchaType[] captchaTypes;
+	
+	/** 验证码有效时间 */
+	private Integer vcodeExpiryTime;
 
 	/** 账号锁定类型 */
 	private AccountLockType[] accountLockTypes;
@@ -390,6 +393,27 @@ public class Setting implements Serializable {
 
 	/** CNZZ统计密码 */
 	private String cnzzPassword;
+	
+	/**
+	 * 获取验证码有效时间
+	 * 
+	 * @return 验证码有效时间
+	 */
+	@NotNull
+	@Min(0)
+	public Integer getVcodeExpiryTime() {
+		return vcodeExpiryTime;
+	}
+
+	/**
+	 * 设置验证码有效时间
+	 * 
+	 * @param vcodeExpiryTime
+	 *            安全密匙有效时间
+	 */
+	public void setVcodeExpiryTime(Integer vcodeExpiryTime) {
+		this.vcodeExpiryTime = vcodeExpiryTime;
+	}
 
 	/**
 	 * 获取网站名称
