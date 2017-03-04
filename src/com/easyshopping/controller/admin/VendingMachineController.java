@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.easyshopping.DatagridDTO;
 import com.easyshopping.Message;
+import com.easyshopping.Page;
 import com.easyshopping.Pageable;
 import com.easyshopping.entity.BaseEntity.Save;
 import com.easyshopping.entity.Vendor;
@@ -141,5 +143,21 @@ public class VendingMachineController extends BaseController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(nameFormat);
 		String fileName = dateFormat.format(date) + fileType;
 		return fileName;
+	}
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping(value = "/vendorList", method = RequestMethod.GET)
+	@ResponseBody
+	public DatagridDTO getProductlist(String searchText,int page, int rows) {
+		Pageable pageable = new Pageable();
+		pageable.setPageNumber(page);
+		pageable.setPageSize(rows);
+		DatagridDTO dgDto = new DatagridDTO();
+		Page<Vendor> pageInfo = vendingMachineService.findPage(pageable);
+		dgDto.setRows(pageInfo.getContent());
+		dgDto.setTotal(pageInfo.getTotal());
+		return dgDto;
 	}
 }

@@ -120,7 +120,6 @@ public class Inventory extends BaseEntity {
 	}
 
 	@JsonProperty
-	@Field(store = Store.YES, index = Index.UN_TOKENIZED)
 	@Pattern(regexp = "[\\s\\S]*")
 	@Length(max = 100)
 	@Column(nullable = false, unique = true, length = 100)
@@ -133,7 +132,6 @@ public class Inventory extends BaseEntity {
 	}
 
 	@JsonProperty
-	@Field(store = Store.YES, index = Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)

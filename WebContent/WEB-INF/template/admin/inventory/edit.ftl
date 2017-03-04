@@ -7,7 +7,7 @@
 <meta name="copyright" content="EASY SHOPPING" />
 <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="${base}/resources/admin/jquery-easyui/themes/default/easyui.css" />
-	<link rel="stylesheet" type="text/css" href="${base}/resources/admin/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="${base}/resources/admin/jquery-easyui/themes/icon.css" />
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.lSelect.js"></script>
@@ -46,8 +46,8 @@ $().ready(function() {
 		singleSelect:true,
 		url:'${base}/admin/product/productList.jhtml',
 		method:'get',
-		toolbar:'#tb',
-		footer:'#ft',
+		toolbar:'#product_tb',
+		footer:'#product_ft',
 		columns:[[
 			{field:'ck',checkbox:true},
 			{field:'sn',title:'编号',width:200},
@@ -67,6 +67,41 @@ $().ready(function() {
 	});
 	// displayMsg:"展示 {from} 到 {to} 共 {total} 条记录"
 	$("#proList").datagrid('getPager').pagination({
+		beforePageText:"第",
+		afterPageText:"页/共{pages}页",
+		displayMsg:"展示 {from} 到 {to} 共 {total} 条记录"
+	});
+	
+	$("#vendorList").datagrid({
+		pagination:true,
+		fit:true,
+		border:false,
+		rownumbers:true,
+		singleSelect:true,
+		url:'${base}/admin/vending_machine/vendorList.jhtml',
+		method:'get',
+		toolbar:'#vendor_tb',
+		footer:'#vendor_ft',
+		columns:[[
+			{field:'ck',checkbox:true},
+			{field:'vendor_code',title:'自动售货机编码',width:200},
+			{field:'position',title:'坐标（经纬度）',width:400},
+			{field:'address',title:'地址',width:100},
+			{field:'shophours',title:'营业时间',width:100},
+			{field:'name',title:'名称',width:100},
+			{field:'discount',title:'折扣',width:100},
+			{field:'privilege',title:'优惠',width:100},
+			{field:'createDate',title:'创建时间',width:150,formatter: function(value,row,index){ return new Date(value).Format("yyyy-MM-dd HH:mm:ss")}}
+	    ]],
+	    onClickRow:function(index,row){
+	    	console.info(row);
+	    	$("#vendor_id").val(row.id);
+	    	$("#vendor_code").val(row.vendor_code);
+	    	$("#vendor_name").val(row.name);
+	    }
+	});
+	// displayMsg:"展示 {from} 到 {to} 共 {total} 条记录"
+	$("#vendorList").datagrid('getPager').pagination({
 		beforePageText:"第",
 		afterPageText:"页/共{pages}页",
 		displayMsg:"展示 {from} 到 {to} 共 {total} 条记录"
@@ -106,20 +141,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
 		<input type="hidden" id="vendor_id" name="vendor_id" value="${inventory.vendor_id}" />
 		<input type="hidden" id="product_id" name="product_id" value="${inventory.product_id}" />
 		<table class="input">
-			<tr>
+			<!-- <tr>
 				<th>
 					<span class="requiredField">*</span>售货机ID:
 				</th>
 				<td>
 					<input type="text" name="vendor_id" class="text" maxlength="200" value="${inventory.vendor_id}" />
 				</td>
-			</tr>
+			</tr> -->
 			<tr>
 				<th>
 					<span class="requiredField">*</span>售货机编码:
 				</th>
 				<td>
-					<input type="text" name="vendor_code" class="text" value="${inventory.vendor_code}" maxlength="200" />
+					<input type="text" id="vendor_code" name="vendor_code" class="text" value="${inventory.vendor_code}" maxlength="200" onclick="$('#vendorWindow').window('open')" readonly />(请点击选择)
 				</td>
 			</tr>
 			<tr>
@@ -127,7 +162,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 					<span class="requiredField">*</span>售货机名称:
 				</th>
 				<td>
-					<input type="text" name="vendor_name" class="text" value="${inventory.vendor_name}" maxlength="200" />
+					<input type="text" id="vendor_name" name="vendor_name" class="text" value="${inventory.vendor_name}" maxlength="200" readonly />
 				</td>
 			</tr>
 			<!-- <tr>
@@ -144,7 +179,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 				</th>
 				<td>
 					<span class="fieldSet">
-						<input type="text" id="sn" name="sn" value="${inventory.sn}" class="text" onclick="$('#proWindow').window('open')" readonly/>
+						<input type="text" id="sn" name="sn" value="${inventory.sn}" class="text" onclick="$('#proWindow').window('open')" readonly/>(请点击选择)
 					</span>
 				</td>
 			</tr>
@@ -177,12 +212,22 @@ Date.prototype.Format = function (fmt) { //author: meizz
 	</form>
 	<div id="proWindow" class="easyui-window" title="商品清单" data-options="modal:true,closed:true" style="width:80%;height:500px;">
 		<table id="proList"></table>
-		<div id="tb" style="padding:2px 5px;">
+		<div id="product_tb" style="padding:2px 5px;">
 			商品信息: <input class="easyui-textbox" style="width:110px" />
 			<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>
-		<div id="ft" style="padding:2px 5px;text-align: right;">
+		<div id="product_ft" style="padding:2px 5px;text-align: right;">
 			<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#proWindow').window('close')">选择</a>
+		</div>
+	</div>
+	<div id="vendorWindow" class="easyui-window" title="售货机清单" data-options="modal:true,closed:true" style="width:80%;height:500px;">
+		<table id="vendorList"></table>
+		<div id="vendor_tb" style="padding:2px 5px;">
+			售货机信息: <input class="easyui-textbox" style="width:110px" />
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+		</div>
+		<div id="vendor_ft" style="padding:2px 5px;text-align: right;">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#vendorWindow').window('close')">选择</a>
 		</div>
 	</div>
 </body>
