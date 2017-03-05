@@ -264,4 +264,9 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, Long> implement
 		return null;
 	}
 
+	@Override
+	public Page<Product> findPageBySnOrName(String searchText, Pageable pageable) {
+		return productDao.findPageBySnOrName(searchText, pageable);
+	}
+
 }

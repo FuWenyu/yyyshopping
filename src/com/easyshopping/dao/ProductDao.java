@@ -237,5 +237,13 @@ public interface ProductDao extends BaseDao<Product, Long> {
 	 * @return 是否已购买该商品
 	 */
 	boolean isPurchased(Member member, Product product);
+	
+	/**
+	 * 模糊查询商品sn/名称
+	 * @param searchText
+	 * @param pageable
+	 * @return
+	 */
+	Page<Product> findPageBySnOrName(String searchText, Pageable pageable);
 
 }

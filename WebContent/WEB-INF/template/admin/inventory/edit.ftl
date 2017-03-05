@@ -39,6 +39,9 @@ $().ready(function() {
 	});
 	
 	$("#proList").datagrid({
+		queryParams: {
+			searchText: $("#productInfo").val()
+		},
 		fitColumns:true,
 		pagination:true,
 		fit:true,
@@ -74,6 +77,9 @@ $().ready(function() {
 	});
 	
 	$("#vendorList").datagrid({
+		queryParams: {
+			searchText: $("#vendorInfo").val()
+		},
 		fitColumns:true,
 		pagination:true,
 		fit:true,
@@ -131,6 +137,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
  for (var k in o)
  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
  return fmt;
+}
+
+function productSearch(){
+	var productInfo = $("#productInfo").val();
+	$('#proList').datagrid('load',{
+		searchText: productInfo
+	});
+}
+
+function vendorSearch(){
+	var vendorInfo = $("#vendorInfo").val();
+	$('#vendorList').datagrid('load',{
+		searchText: vendorInfo
+	});
 }
 </script>
 </head>
@@ -212,21 +232,21 @@ Date.prototype.Format = function (fmt) { //author: meizz
 			</tr>
 		</table>
 	</form>
-	<div id="proWindow" class="easyui-window" title="商品清单" data-options="modal:true,closed:true" style="width:80%;height:500px;">
+	<div id="proWindow" class="easyui-window" title="商品清单" data-options="modal:true,closed:true" style="width:950px;height:500px;">
 		<table id="proList"></table>
 		<div id="product_tb" style="padding:2px 5px;">
-			商品信息: <input class="easyui-textbox" style="width:110px" />
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+			商品编号/名称: <input class="easyui-textbox" style="width:110px" id="productInfo" value="" />
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="productSearch()">搜索</a>
 		</div>
 		<div id="product_ft" style="padding:2px 5px;text-align: right;">
 			<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#proWindow').window('close')">选择</a>
 		</div>
 	</div>
-	<div id="vendorWindow" class="easyui-window" title="售货机清单" data-options="modal:true,closed:true" style="width:80%;height:500px;">
+	<div id="vendorWindow" class="easyui-window" title="售货机清单" data-options="modal:true,closed:true" style="width:950px;height:500px;">
 		<table id="vendorList"></table>
 		<div id="vendor_tb" style="padding:2px 5px;">
-			售货机信息: <input class="easyui-textbox" style="width:110px" />
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+			售货机编号/名称: <input class="easyui-textbox" style="width:110px" id="vendorInfo" value="" />
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="vendorSearch()">搜索</a>
 		</div>
 		<div id="vendor_ft" style="padding:2px 5px;text-align: right;">
 			<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#vendorWindow').window('close')">选择</a>

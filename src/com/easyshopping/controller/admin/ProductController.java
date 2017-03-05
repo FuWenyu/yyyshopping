@@ -5,6 +5,7 @@
  */
 package com.easyshopping.controller.admin;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -553,15 +554,20 @@ public class ProductController extends BaseController {
 	
 	/**
 	 * 列表
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	@ResponseBody
-	public DatagridDTO getProductlist(String searchText,int page, int rows) {
+	public DatagridDTO getProductlist(String searchText,int page, int rows) throws UnsupportedEncodingException {
 		Pageable pageable = new Pageable();
 		pageable.setPageNumber(page);
 		pageable.setPageSize(rows);
 		DatagridDTO dgDto = new DatagridDTO();
-		Page<Product> pageInfo = productService.findPage(pageable);
+//		Page<Product> pageInfo = productService.findPage(pageable);
+		if(searchText!=null){
+			searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
+		}
+		Page<Product> pageInfo = productService.findPageBySnOrName(searchText, pageable);
 		dgDto.setRows(pageInfo.getContent());
 		dgDto.setTotal(pageInfo.getTotal());
 		return dgDto;

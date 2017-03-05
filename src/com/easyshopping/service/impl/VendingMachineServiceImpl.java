@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.easyshopping.Page;
+import com.easyshopping.Pageable;
 import com.easyshopping.dao.VendingMachineDao;
 import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.VendingMachineService;
@@ -35,6 +37,11 @@ public class VendingMachineServiceImpl extends BaseServiceImpl<Vendor, Long> imp
 	@Override
 	public List<Vendor> findList(String longitude, String latitude) {
 		return vendingMachineDao.findList(longitude, latitude);
+	}
+
+	@Override
+	public Page<Vendor> findPageByCodeOrName(String searchText, Pageable pageable) {
+		return vendingMachineDao.findPageByCodeOrName(searchText, pageable);
 	}
 
 }

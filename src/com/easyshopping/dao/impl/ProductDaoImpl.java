@@ -29,6 +29,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
+
 import com.easyshopping.Filter;
 import com.easyshopping.Order;
 import com.easyshopping.Page;
@@ -40,7 +45,6 @@ import com.easyshopping.dao.SnDao;
 import com.easyshopping.entity.Attribute;
 import com.easyshopping.entity.Brand;
 import com.easyshopping.entity.Goods;
-import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Member;
 import com.easyshopping.entity.Order.OrderStatus;
 import com.easyshopping.entity.Order.PaymentStatus;
@@ -52,13 +56,7 @@ import com.easyshopping.entity.Promotion;
 import com.easyshopping.entity.Sn.Type;
 import com.easyshopping.entity.SpecificationValue;
 import com.easyshopping.entity.Tag;
-import com.easyshopping.entity.Vendor;
 import com.easyshopping.util.SettingUtils;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 
 /**
  * Dao - 商品
@@ -558,5 +556,18 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements Produc
 		product.setFullName(fullName.toString());
 	}
 
-
+	public Page<Product> findPageBySnOrName(String searchText, Pageable pageable) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+		Root<Product> root = criteriaQuery.from(Product.class);
+		criteriaQuery.select(root);
+		if(searchText!=null&&!searchText.equals("")){
+			Predicate condition1 = criteriaBuilder.like(root.get("sn").as(String.class), "%"+searchText+"%");
+			Predicate condition2 = criteriaBuilder.like(root.get("name").as(String.class), "%"+searchText+"%");
+			Predicate condition = criteriaBuilder.or(condition1, condition2);
+			return super.findPage(criteriaQuery.where(condition), pageable);
+		} else {
+			return super.findPage(criteriaQuery, pageable);
+		}
+	}
 }

@@ -2,6 +2,7 @@ package com.easyshopping.controller.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -147,15 +148,20 @@ public class VendingMachineController extends BaseController {
 	
 	/**
 	 * 列表
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/vendorList", method = RequestMethod.GET)
 	@ResponseBody
-	public DatagridDTO getProductlist(String searchText,int page, int rows) {
+	public DatagridDTO getProductlist(String searchText,int page, int rows) throws UnsupportedEncodingException {
 		Pageable pageable = new Pageable();
 		pageable.setPageNumber(page);
 		pageable.setPageSize(rows);
 		DatagridDTO dgDto = new DatagridDTO();
-		Page<Vendor> pageInfo = vendingMachineService.findPage(pageable);
+		//Page<Vendor> pageInfo = vendingMachineService.findPage(pageable);
+		if(searchText!=null){
+			searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
+		}
+		Page<Vendor> pageInfo = vendingMachineService.findPageByCodeOrName(searchText, pageable);
 		dgDto.setRows(pageInfo.getContent());
 		dgDto.setTotal(pageInfo.getTotal());
 		return dgDto;

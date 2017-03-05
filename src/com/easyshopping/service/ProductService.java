@@ -300,5 +300,13 @@ public interface ProductService extends BaseService<Product, Long> {
 	 * @return 点击数
 	 */
 	long viewHits(Long id);
+	
+	/**
+	 * 模糊查询商品sn/名称
+	 * @param searchText
+	 * @param pageable
+	 * @return
+	 */
+	Page<Product> findPageBySnOrName(String searchText, Pageable pageable);
 
 }
