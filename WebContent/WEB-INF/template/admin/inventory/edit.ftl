@@ -5,7 +5,7 @@
 <title>${message("admin.deliveryCenter.edit")} - EASY SHOPPING</title>
 <meta name="author" content="EASY SHOPPING Team" />
 <meta name="copyright" content="EASY SHOPPING" />
-<link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
+<link href="${base}/resources/admin/css/commonWithoutPage.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="${base}/resources/admin/jquery-easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="${base}/resources/admin/jquery-easyui/themes/icon.css" />
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
@@ -39,6 +39,7 @@ $().ready(function() {
 	});
 	
 	$("#proList").datagrid({
+		fitColumns:true,
 		pagination:true,
 		fit:true,
 		border:false,
@@ -50,13 +51,13 @@ $().ready(function() {
 		footer:'#product_ft',
 		columns:[[
 			{field:'ck',checkbox:true},
-			{field:'sn',title:'编号',width:200},
-			{field:'name',title:'名称',width:400},
-			{field:'productCategory',title:'商品分类',width:100,formatter: function(value,row,index){ return value.name}},
-			{field:'price',title:'销售价',width:100},
-			{field:'cost',title:'成本价',width:100},
-			{field:'isMarketable',title:'是否上架',width:100,formatter: function(value,row,index){ if(value==true){return '是'}else{return '否'}}},
-			{field:'createDate',title:'创建日期',width:150,formatter: function(value,row,index){ return new Date(value).Format("yyyy-MM-dd HH:mm:ss")}}
+			{field:'sn',title:'编号'},
+			{field:'name',title:'名称'},
+			{field:'productCategory',title:'商品分类',formatter: function(value,row,index){ return value.name}},
+			{field:'price',title:'销售价'},
+			{field:'cost',title:'成本价'},
+			{field:'isMarketable',title:'是否上架',formatter: function(value,row,index){ if(value==true){return '是'}else{return '否'}}},
+			{field:'createDate',title:'创建日期',formatter: function(value,row,index){ return new Date(value).Format("yyyy-MM-dd HH:mm:ss")}}
 	    ]],
 	    onClickRow:function(index,row){
 	    	console.info(row);
@@ -73,6 +74,7 @@ $().ready(function() {
 	});
 	
 	$("#vendorList").datagrid({
+		fitColumns:true,
 		pagination:true,
 		fit:true,
 		border:false,
@@ -84,14 +86,14 @@ $().ready(function() {
 		footer:'#vendor_ft',
 		columns:[[
 			{field:'ck',checkbox:true},
-			{field:'vendor_code',title:'自动售货机编码',width:200},
-			{field:'position',title:'坐标（经纬度）',width:400},
-			{field:'address',title:'地址',width:100},
-			{field:'shophours',title:'营业时间',width:100},
-			{field:'name',title:'名称',width:100},
-			{field:'discount',title:'折扣',width:100},
-			{field:'privilege',title:'优惠',width:100},
-			{field:'createDate',title:'创建时间',width:150,formatter: function(value,row,index){ return new Date(value).Format("yyyy-MM-dd HH:mm:ss")}}
+			{field:'vendor_code',title:'自动售货机编码'},
+			{field:'position',title:'坐标（经纬度）'},
+			{field:'address',title:'地址'},
+			{field:'shophours',title:'营业时间'},
+			{field:'name',title:'名称'},
+			{field:'discount',title:'折扣'},
+			{field:'privilege',title:'优惠'},
+			{field:'createDate',title:'创建时间',formatter: function(value,row,index){ return new Date(value).Format("yyyy-MM-dd HH:mm:ss")}}
 	    ]],
 	    onClickRow:function(index,row){
 	    	console.info(row);
