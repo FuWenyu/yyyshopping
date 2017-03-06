@@ -804,7 +804,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 	 * @param count
 	 * @return
 	 */
-	public Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount) {
+	public Order createAppOrder(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount) {
 		Assert.notNull(paymentMethod);
 
 		Member member;
@@ -822,7 +822,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 			order.setLockExpire(DateUtils.addSeconds(new Date(), 20));
 			order.setOperator(operator);
 		}
-
+		order.setPaymentStatus(PaymentStatus.unpaid);
 		Setting setting = SettingUtils.get();
 		if (setting.getStockAllocationTime() == StockAllocationTime.order || (setting.getStockAllocationTime() == StockAllocationTime.payment && (order.getPaymentStatus() == PaymentStatus.partialPayment || order.getPaymentStatus() == PaymentStatus.paid))) {
 			order.setIsAllocatedStock(true);

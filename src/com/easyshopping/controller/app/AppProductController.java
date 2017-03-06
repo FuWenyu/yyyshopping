@@ -76,7 +76,7 @@ public class AppProductController extends BaseController {
 		return new AppMessage().success("查询成功", map);
 	}
 	/**
-	 * 列表
+	 * 商品webview
 	 */
 	@RequestMapping(value = "/webview", method = RequestMethod.GET)
 	public String webView(Long productId,ModelMap model) {

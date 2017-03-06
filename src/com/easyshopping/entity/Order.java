@@ -36,6 +36,7 @@ import javax.validation.constraints.NotNull;
 
 import com.easyshopping.Setting;
 import com.easyshopping.util.SettingUtils;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -261,6 +262,7 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 取货码
 	 */
+	@JsonProperty
 	@Column(nullable = false, updatable = false, length = 30)
 	public String getTakeCode() {
 		return takeCode;
@@ -279,8 +281,9 @@ public class Order extends BaseEntity {
 	/**
 	 * 获取取货状态
 	 * 
-	 * @return 订单编号
+	 * @return 
 	 */
+	@JsonProperty
 	@Column(nullable = false, length = 11)
 	public TakeStatus getTakeStatus() {
 		return takeStatus;
@@ -301,6 +304,7 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 订单编号
 	 */
+	@JsonProperty
 	@Column(nullable = false, updatable = false, unique = true, length = 100)
 	public String getSn() {
 		return sn;
@@ -321,6 +325,7 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 订单状态
 	 */
+	@JsonProperty
 	@Column(nullable = false)
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
@@ -341,6 +346,7 @@ public class Order extends BaseEntity {
 	 * 
 	 * @return 支付状态
 	 */
+	@JsonProperty
 	@Column(nullable = false)
 	public PaymentStatus getPaymentStatus() {
 		return paymentStatus;

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easyshopping.AppMessage;
-import com.easyshopping.entity.Inventory;
 import com.easyshopping.entity.Vendor;
 import com.easyshopping.service.InventoryService;
 import com.easyshopping.service.VendingMachineService;
@@ -48,26 +47,5 @@ public class AppVendorController extends BaseController {
 		List<Vendor> list = vendingMachineService.findList(longitude,latitude);
 		return new AppMessage().success("查询成功", list);
 	}
-	
 
-	/**
-	 * 列表
-	 */
-	@RequestMapping(value = "/queryInventory", method = RequestMethod.POST)
-	@ResponseBody
-	public AppMessage queryInventory(HttpServletRequest request) {
-		String vendor_id = request.getParameter("vendor_id");
-		String product_id = request.getParameter("product_id");
-		if(vendor_id==null||"".equals(vendor_id)){
-			AppMessage.warn("售货机不能为空");
-		}
-		if(product_id==null||"".equals(product_id)){
-			product_id="-1";
-		}
-		List<Inventory> list = inventoryService.queryCount(Long.parseLong(vendor_id), Long.parseLong(product_id));
-		if(list==null||list.size()==0){
-			return AppMessage.warn("售货机无库存");
-		}
-		return AppMessage.success("查询成功", list);
-	}
 }

@@ -35,7 +35,7 @@ public class AppProductCategoryController extends BaseController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
 	public AppMessage list(HttpServletRequest httpServletRequest) {
 		return new AppMessage().success("查询成功", productCategoryService.findList(1));

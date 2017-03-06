@@ -314,7 +314,7 @@ public interface OrderService extends BaseService<Order, Long> {
 	 * @param count
 	 * @return
 	 */
-	Order createApp(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount);
+	Order createAppOrder(Inventory inventory, PaymentMethod paymentMethod,  String memo, Admin operator,String userId,int count,BigDecimal amount);
 
 
 	/**

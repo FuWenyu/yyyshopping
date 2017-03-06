@@ -55,7 +55,7 @@ public class VendingMachineController extends BaseController {
 		if (!isValid(bean, Save.class)) {
 			return ERROR_VIEW;
 		}
-		String relativePath = "upload\\image\\vendingMachine\\" + date2FileName("yyyyMMdd_HHmmss", ".jpg");
+		String relativePath = "/upload/image/vendingMachine/" + date2FileName("yyyyMMdd_HHmmss", ".jpg");
 		String path=session.getServletContext().getRealPath("/") + relativePath;
 		File newFile=new File(path);
 		//通过CommonsMultipartFile的方法直接写文件

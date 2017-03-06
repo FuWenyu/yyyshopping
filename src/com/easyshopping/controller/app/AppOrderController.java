@@ -58,11 +58,11 @@ public class AppOrderController extends BaseController {
 	public AppMessage create(HttpServletRequest request) {
 		Map<String,Object> map = new HashMap<String,Object>();
 
-		String vendor_id = request.getParameter("vendor_id");
-		String product_id = request.getParameter("product_id");
+		String vendorId = request.getParameter("vendorId");
+		String productId = request.getParameter("productId");
 		String count = request.getParameter("count");
 		BigDecimal amount = new BigDecimal(request.getParameter("amount"));
-		List<Inventory> list = inventoryService.queryCount(Long.parseLong(vendor_id), Long.parseLong(product_id));
+		List<Inventory> list = inventoryService.queryCount(Long.parseLong(vendorId), Long.parseLong(productId));
 		if(list==null||list.size()==0){
 			return AppMessage.warn("该售货机无此产品", map);
 		}
@@ -73,7 +73,7 @@ public class AppOrderController extends BaseController {
 		if(Integer.parseInt(count)>list.get(0).getNumber()){
 			return AppMessage.warn("库存不足", map);
 		}
-		Order order = orderService.createApp(list.get(0),paymentMethod,request.getParameter("memo"), null, request.getParameter("userId"),Integer.parseInt(count),amount);
+		Order order = orderService.createAppOrder(list.get(0),paymentMethod,request.getParameter("memo"), null, request.getParameter("userId"),Integer.parseInt(count),amount);
 		map.put("sn", order.getSn());
 		map.put("takeCode", order.getTakeCode());
 		return AppMessage.success("下单成功", map);
@@ -95,5 +95,15 @@ public class AppOrderController extends BaseController {
 			return AppMessage.success("退单成功");
 		}
 		return AppMessage.error("退单失败");
+	}
+	/**
+	 * 退单
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public @ResponseBody
+	AppMessage list(HttpServletRequest request) {
+		Member member = memberService.find(Long.parseLong(request.getParameter("userId")));
+		List<Order> list = orderService.findList(member, Integer.valueOf(request.getParameter("count")), null, null);
+		return AppMessage.success("查询成功",list);
 	}
 }
